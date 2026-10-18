@@ -79,6 +79,11 @@ orbitly:
       webhook-secret: ${MUX_WEBHOOK_SECRET:}
       signing-key-id: ${MUX_SIGNING_KEY_ID:}
       signing-private-key: ${MUX_SIGNING_PRIVATE_KEY:}
+  notifications:
+    # "log" (print emails, for development) or "smtp"
+    mail-mode: ${MAIL_MODE:log}
+    from-address: ${MAIL_FROM:Orbitly <no-reply@orbitly.local>}
+    reminders: true
   billing:
     # "test" (no real payments) or "stripe"
     provider: ${BILLING_PROVIDER:test}

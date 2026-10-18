@@ -12,6 +12,9 @@ logging:
     org.springframework.security: WARN
 
 orbitly:
+  notifications:
+    async: false
+    reminders: false
   media:
     storage: local
     local:

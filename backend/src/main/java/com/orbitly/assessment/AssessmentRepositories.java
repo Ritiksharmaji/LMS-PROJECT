@@ -24,6 +24,8 @@ interface QuizRepository extends JpaRepository<Quiz, UUID> {
 	List<Quiz> findByCourseIdIn(Collection<UUID> courseIds);
 
 	List<Quiz> findByCourseId(UUID courseId);
+
+	List<Quiz> findByDueAtBetween(java.time.Instant from, java.time.Instant to);
 }
 
 interface QuizQuestionRepository extends JpaRepository<QuizQuestion, UUID> {
@@ -43,6 +45,9 @@ interface QuizAttemptRepository extends JpaRepository<QuizAttempt, UUID> {
 			+ "where a.quizId in :quizIds group by a.quizId, a.userId")
 	List<Object[]> bestByQuizAndUser(@Param("quizIds") Collection<UUID> quizIds);
 
+	@Query("select distinct a.userId from QuizAttempt a where a.quizId = :quizId and a.passed = true")
+	List<UUID> passedUserIds(@Param("quizId") UUID quizId);
+
 	@Query("select a.quizId from QuizAttempt a where a.userId = :userId and a.quizId in :quizIds and a.passed = true")
 	List<UUID> passedQuizIds(@Param("userId") UUID userId, @Param("quizIds") Collection<UUID> quizIds);
 }
@@ -59,6 +64,8 @@ interface AssignmentRepository extends JpaRepository<Assignment, UUID> {
 	List<Assignment> findByCourseIdIn(Collection<UUID> courseIds);
 
 	List<Assignment> findByCourseId(UUID courseId);
+
+	List<Assignment> findByDueAtBetween(java.time.Instant from, java.time.Instant to);
 }
 
 interface SubmissionRepository extends JpaRepository<Submission, UUID> {
@@ -68,6 +75,9 @@ interface SubmissionRepository extends JpaRepository<Submission, UUID> {
 	Optional<Submission> findByIdAndOrgId(UUID id, UUID orgId);
 
 	List<Submission> findByAssignmentIdIn(Collection<UUID> assignmentIds);
+
+	@Query("select s.userId from Submission s where s.assignmentId = :assignmentId and s.status <> 'RETURNED'")
+	List<UUID> submittedUserIds(@Param("assignmentId") UUID assignmentId);
 
 	List<Submission> findByUserIdAndAssignmentIdIn(UUID userId, Collection<UUID> assignmentIds);
 
