@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: ${TEST_DB_URL:jdbc:postgresql://localhost:5432/orbitly_test}
+  flyway:
+    clean-disabled: false
+  mail:
+    host: localhost
+    port: 1025
+
+logging:
+  level:
+    org.springframework.security: WARN
