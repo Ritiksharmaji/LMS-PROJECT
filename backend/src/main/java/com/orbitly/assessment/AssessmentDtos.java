@@ -44,8 +44,9 @@ public final class AssessmentDtos {
 	public record SubmitQuizRequest(@NotNull Map<UUID, List<Integer>> answers) {
 	}
 
+	/** {@code fileId} is a SUBMISSION file uploaded through {@code /api/me/uploads} for this course. */
 	public record SubmitAssignmentRequest(@Size(max = 20000) String body, @Size(max = 1000) String linkUrl,
-			@Size(max = 500) String fileKey, @Size(max = 255) String fileName) {
+			UUID fileId) {
 	}
 
 	// ---- Grading requests -----------------------------------------------------------------------------------
@@ -92,7 +93,7 @@ public final class AssessmentDtos {
 
 	public record SubmissionView(UUID id, UUID assignmentId, UUID lessonId, UUID courseId, UUID userId,
 			String learnerName, String learnerAvatarUrl, SubmissionStatus status, String body, String linkUrl,
-			String fileKey, String fileName, Instant submittedAt, boolean late, Integer points, int maxPoints,
+			UUID fileId, String fileName, Instant submittedAt, boolean late, Integer points, int maxPoints,
 			String feedback, Instant gradedAt, String lessonTitle, String courseTitle) {
 	}
 

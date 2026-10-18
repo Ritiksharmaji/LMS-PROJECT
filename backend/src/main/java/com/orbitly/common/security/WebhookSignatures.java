@@ -1,4 +1,4 @@
-package com.orbitly.billing;
+package com.orbitly.common.security;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -10,16 +10,17 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- * Verifies the {@code Stripe-Signature} header: {@code t=<unix seconds>,v1=<hex HMAC-SHA256 of "t.payload">}.
+ * Verifies webhook signature headers of the form {@code t=<unix seconds>,v1=<hex HMAC-SHA256 of "t.payload">}, used
+ * by both Stripe ({@code Stripe-Signature}) and Mux ({@code Mux-Signature}).
  */
-final class StripeSignature {
+public final class WebhookSignatures {
 
-	static final Duration TOLERANCE = Duration.ofMinutes(5);
+	public static final Duration TOLERANCE = Duration.ofMinutes(5);
 
-	private StripeSignature() {
+	private WebhookSignatures() {
 	}
 
-	static boolean verify(String payload, String header, String secret, Instant now) {
+	public static boolean verify(String payload, String header, String secret, Instant now) {
 		if (header == null || secret == null || secret.isBlank()) {
 			return false;
 		}
@@ -55,7 +56,7 @@ final class StripeSignature {
 			.anyMatch(sig -> MessageDigest.isEqual(expected, sig.getBytes(StandardCharsets.UTF_8)));
 	}
 
-	static String sign(String signedPayload, String secret) {
+	public static String sign(String signedPayload, String secret) {
 		try {
 			Mac mac = Mac.getInstance("HmacSHA256");
 			mac.init(new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256"));

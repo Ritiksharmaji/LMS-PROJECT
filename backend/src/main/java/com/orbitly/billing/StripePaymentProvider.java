@@ -23,12 +23,13 @@ class StripePaymentProvider implements PaymentProvider {
 
 	private final RestClient http;
 
-	StripePaymentProvider(BillingProperties properties, RestClient.Builder builder) {
+	StripePaymentProvider(BillingProperties properties) {
 		String key = properties.stripe().secretKey();
 		if (key == null || key.isBlank()) {
 			throw new IllegalStateException("orbitly.billing.stripe.secret-key is required when provider=stripe");
 		}
-		this.http = builder.baseUrl(properties.stripe().apiBase())
+		this.http = RestClient.builder()
+			.baseUrl(properties.stripe().apiBase())
 			.defaultHeader("Authorization", "Bearer " + key)
 			.build();
 	}

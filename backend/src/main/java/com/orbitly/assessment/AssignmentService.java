@@ -29,6 +29,8 @@ import com.orbitly.common.security.Role;
 import com.orbitly.common.web.ApiException;
 import com.orbitly.identity.UserDirectory;
 import com.orbitly.learning.Enrollments;
+import com.orbitly.media.FilePurpose;
+import com.orbitly.media.MediaFiles;
 
 @Service
 class AssignmentService {
@@ -47,11 +49,13 @@ class AssignmentService {
 
 	private final ApplicationEventPublisher events;
 
+	private final MediaFiles mediaFiles;
+
 	private final Clock clock;
 
 	AssignmentService(AssignmentRepository assignments, SubmissionRepository submissions, AssessmentAccess access,
 			Enrollments enrollments, CourseCatalog catalog, UserDirectory directory, ApplicationEventPublisher events,
-			Clock clock) {
+			MediaFiles mediaFiles, Clock clock) {
 		this.assignments = assignments;
 		this.submissions = submissions;
 		this.access = access;
@@ -59,6 +63,7 @@ class AssignmentService {
 		this.catalog = catalog;
 		this.directory = directory;
 		this.events = events;
+		this.mediaFiles = mediaFiles;
 		this.clock = clock;
 	}
 
@@ -115,7 +120,7 @@ class AssignmentService {
 		}
 		Assignment a = assignments.findByLessonIdAndOrgId(lessonId, me.orgId())
 			.orElseThrow(() -> ApiException.notFound("Assignment"));
-		if (isBlank(req.body()) && isBlank(req.linkUrl()) && isBlank(req.fileKey())) {
+		if (isBlank(req.body()) && isBlank(req.linkUrl()) && req.fileId() == null) {
 			throw ApiException.badRequest("Add a file, a link or a written answer");
 		}
 		Instant now = clock.instant();
@@ -133,8 +138,16 @@ class AssignmentService {
 		s.setStatus(SubmissionStatus.SUBMITTED);
 		s.setBody(blankToNull(req.body()));
 		s.setLinkUrl(blankToNull(req.linkUrl()));
-		s.setFileKey(blankToNull(req.fileKey()));
-		s.setFileName(blankToNull(req.fileName()));
+		if (req.fileId() != null) {
+			var file = mediaFiles.requireOwnedFile(me.orgId(), me.userId(), req.fileId(), FilePurpose.SUBMISSION,
+					a.getCourseId());
+			s.setFileKey(file.id().toString());
+			s.setFileName(file.fileName());
+		}
+		else {
+			s.setFileKey(null);
+			s.setFileName(null);
+		}
 		s.setSubmittedAt(now);
 		s.setLate(late);
 		s.setPoints(null);
@@ -245,7 +258,7 @@ class AssignmentService {
 			String courseTitle) {
 		return new SubmissionView(s.getId(), a.getId(), a.getLessonId(), s.getCourseId(), s.getUserId(),
 				person == null ? null : person.fullName(), person == null ? null : person.avatarUrl(), s.getStatus(),
-				s.getBody(), s.getLinkUrl(), s.getFileKey(), s.getFileName(), s.getSubmittedAt(), s.isLate(),
+				s.getBody(), s.getLinkUrl(), s.getFileKey() == null ? null : UUID.fromString(s.getFileKey()), s.getFileName(), s.getSubmittedAt(), s.isLate(),
 				s.getPoints(), a.getMaxPoints(), s.getFeedback(), s.getGradedAt(), lessonTitle, courseTitle);
 	}
 

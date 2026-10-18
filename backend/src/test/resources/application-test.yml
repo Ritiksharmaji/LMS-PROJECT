@@ -12,6 +12,12 @@ logging:
     org.springframework.security: WARN
 
 orbitly:
+  media:
+    storage: local
+    local:
+      root: ./build/test-storage
+    mux:
+      webhook-secret: mux_test_secret
   billing:
     provider: test
     stripe:
