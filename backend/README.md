@@ -55,3 +55,7 @@ Full endpoint list: [`docs/API.md`](docs/API.md).
 - Lists return `{ items, page, size, total, totalPages }`.
 - Route prefixes: `/api/auth`, `/api/public` (no login), `/api/me` (current user),
   `/api/instructor` (instructor or admin), `/api/admin` (admin only), `/api/webhooks`.
+
+## Postman
+
+A runnable collection with dummy data for every endpoint lives in [`postman/`](postman/README.md).
