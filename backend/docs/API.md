@@ -162,3 +162,30 @@ Anyone with access to the course (enrolled learners, its instructor, admins) can
 | POST | `/api/me/threads/{id}/replies` | Reply |
 | PATCH / DELETE | `/api/me/replies/{id}` | Author edits; author or staff deletes |
 | PUT / DELETE | `/api/me/replies/{id}/answer` | Question author or staff mark the answer (resolves the thread) |
+
+## Billing (`backend-08-billing`)
+
+Hosted checkout: card details are entered on the provider's page, never sent to this API.
+`BILLING_PROVIDER=test` (default) moves no money; `stripe` uses Stripe Checkout (`STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`).
+
+### Learners
+| Method | Path | Purpose |
+|---|---|---|
+| POST | `/api/me/checkout` | Start buying a paid course (`courseId`) → `{orderId, checkoutUrl}`. Redirect to `checkoutUrl`; the provider returns to `/checkout/{orderId}/success` or `/cancel` |
+| GET | `/api/me/orders` / `/api/me/orders/{id}` | My orders / poll one after returning from checkout |
+| POST | `/api/me/orders/{id}/refund` | Refund within 30 days (removes the enrollment) |
+| POST | `/api/me/orders/{id}/test-pay` | Test provider only: complete the payment |
+
+Instructors and admins enroll in any course for free with `POST /api/me/enrollments`.
+
+### Admin
+| Method | Path | Purpose |
+|---|---|---|
+| GET | `/api/admin/orders?status=` | All orders |
+| POST | `/api/admin/orders/{id}/refund` | Refund any paid order |
+| GET | `/api/admin/revenue?days=30` | Paid and refunded totals per currency |
+
+### Webhooks
+| Method | Path | Purpose |
+|---|---|---|
+| POST | `/api/webhooks/stripe` | Stripe events (signature-verified, idempotent): session completed / expired / failed |

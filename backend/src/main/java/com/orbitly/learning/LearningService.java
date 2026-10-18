@@ -68,13 +68,16 @@ class LearningService {
 
 	// ---- Enrolling ------------------------------------------------------------------------------------------
 
-	/** Self-enrollment in a free, published course. Paid courses go through checkout. */
+	/**
+	 * Self-enrollment in a published course: free courses for everyone, any course for instructors and admins. Paid
+	 * courses for students go through checkout.
+	 */
 	@Transactional
 	EnrollmentView enroll(CurrentUser me, UUID courseId) {
 		CourseRef course = catalog.course(me.orgId(), courseId)
 			.filter(c -> c.status() == CourseStatus.PUBLISHED)
 			.orElseThrow(() -> ApiException.notFound("Course"));
-		if (!course.isFree() && !enrollmentApi.isEnrolled(me.userId(), courseId)) {
+		if (!course.isFree() && !me.isStaff() && !enrollmentApi.isEnrolled(me.userId(), courseId)) {
 			throw new ApiException(HttpStatus.PAYMENT_REQUIRED, "payment_required",
 					"This course is paid. Start a checkout to enroll.");
 		}
