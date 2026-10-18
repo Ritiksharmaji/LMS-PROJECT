@@ -81,3 +81,4 @@ For production set, at minimum: `JWT_SECRET`, `APP_URL`, `MAIL_MODE=smtp` + SMTP
 | `frontend-10-motion-all` | Motion on every page; fixes a hydration warning from the scroll reveals |
 | `frontend-11-icons-theme` | Phosphor duotone icons (no icon animation); Light / Dark / System themes |
 | `frontend-12-mobile` | React Native CLI mobile app (`mobile/`) |
+| `docs-01-application-flow` | [`application-flow.md`](application-flow.md): how web, mobile and API work together |
