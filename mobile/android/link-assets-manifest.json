@@ -1,0 +1,37 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Figtree-Bold.ttf",
+      "sha1": "82e096f1e69d1b880b3a0e7c28c03d54a56152c5"
+    },
+    {
+      "path": "assets/fonts/Figtree-Medium.ttf",
+      "sha1": "e3688e24751e01c1bed1fb655fae79316735de2d"
+    },
+    {
+      "path": "assets/fonts/Figtree-Regular.ttf",
+      "sha1": "b971ba6c123ca42604ae74840afd8e1ade6926ea"
+    },
+    {
+      "path": "assets/fonts/Figtree-SemiBold.ttf",
+      "sha1": "17f9c71ec7a0e79fe74b6e0f14b64f3b55dae9cb"
+    },
+    {
+      "path": "assets/fonts/OFL-Figtree.txt",
+      "sha1": "cb6b70d11a028e30a97f267abc3a3060c1447958"
+    },
+    {
+      "path": "assets/fonts/OFL-Sora.txt",
+      "sha1": "4f63bef7f23f84a80455f53a8b9212846d623b35"
+    },
+    {
+      "path": "assets/fonts/Sora-Bold.ttf",
+      "sha1": "f907b49488151754b4d4ca4a5a2aa55e8f01a887"
+    },
+    {
+      "path": "assets/fonts/Sora-SemiBold.ttf",
+      "sha1": "b28cc2fd0b3d43c007fe82fbf7e72715ee3afaab"
+    }
+  ]
+}
