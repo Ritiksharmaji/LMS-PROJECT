@@ -3,6 +3,7 @@ import { Figtree, JetBrains_Mono, Sora } from "next/font/google";
 import { Providers } from "@/components/providers";
 
 import "./globals.css";
+import "./orbitly.css";
 
 const sora = Sora({ variable: "--font-sora", subsets: ["latin", "latin-ext"], weight: ["400", "500", "600", "700"] });
 const figtree = Figtree({ variable: "--font-figtree", subsets: ["latin", "latin-ext"], weight: ["400", "500", "600", "700"] });

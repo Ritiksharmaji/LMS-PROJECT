@@ -1,7 +1,7 @@
 "use client";
 
 import { Badge, CourseCard } from "@/components/ui";
-import { cardProps, courseHref } from "@/lib/course";
+import { cardProps } from "@/lib/course";
 import { useEnrollments } from "@/lib/queries";
 import type { CourseCard as Course } from "@/lib/types";
 import { useSessionRole } from "@/lib/use-session";
@@ -9,7 +9,7 @@ import { useSessionRole } from "@/lib/use-session";
 import { WishButton } from "./WishButton";
 
 /** Course grid used by the catalog and course pages; shows enrollment progress and wishlist hearts when signed in. */
-export function CourseGrid({ courses, cols = 3 }: { courses: Course[]; cols?: 3 | 4 }) {
+export function CourseGrid({ courses, cols = 3, basePath = "/courses" }: { courses: Course[]; cols?: 3 | 4; basePath?: string }) {
   const role = useSessionRole();
   const { data: enrollments } = useEnrollments(!!role);
   const byCourse = new Map((enrollments ?? []).map((e) => [e.course.id, e]));
@@ -21,7 +21,7 @@ export function CourseGrid({ courses, cols = 3 }: { courses: Course[]; cols?: 3 
           <CourseCard
             key={c.id}
             {...cardProps(c)}
-            href={courseHref(c)}
+            href={`${basePath}/${c.slug}`}
             price={e ? "Enrolled" : cardProps(c).price}
             progress={e ? e.progress.percent : undefined}
             badge={e ? <Badge tone="success" dot>Enrolled</Badge> : c.featured ? <Badge tone="dark">Bestseller</Badge> : null}

@@ -13,7 +13,7 @@ type Search = Record<string, string | string[] | undefined>;
 const one = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v) ?? "";
 
 /** Reads the URL's filters (a request-time API, so it renders inside Suspense) and fetches the cached results. */
-export async function CatalogResults({ searchParams, categories }: { searchParams: Promise<Search>; categories: CategoryView[] }) {
+export async function CatalogResults({ searchParams, categories, orgSlug, basePath = "/courses" }: { searchParams: Promise<Search>; categories: CategoryView[]; orgSlug?: string; basePath?: string }) {
   const sp = await searchParams;
   const q = one(sp.q);
   const category = one(sp.category);
@@ -22,7 +22,7 @@ export async function CatalogResults({ searchParams, categories }: { searchParam
   const query = { q, category, level: one(sp.level), price: one(sp.price), sort: one(sp.sort) || "POPULAR" };
 
   // The API has no rating filter, so with one selected we filter the first 60 matches here and show them together.
-  const result = await searchCourses(minRating ? { ...query, size: 60 } : { ...query, page, size: PAGE_SIZE });
+  const result = await searchCourses(minRating ? { ...query, size: 60 } : { ...query, page, size: PAGE_SIZE }, orgSlug);
   const courses = minRating ? result.items.filter((c) => c.ratingCount > 0 && Number(c.ratingAvg) >= minRating) : result.items;
   const total = minRating ? courses.length : result.total;
   const totalPages = minRating ? 1 : result.totalPages;
@@ -32,7 +32,7 @@ export async function CatalogResults({ searchParams, categories }: { searchParam
     const next = new URLSearchParams(Object.entries(sp).flatMap(([k, v]) => (v === undefined ? [] : [[k, one(v)]])));
     if (p) next.set("page", String(p));
     else next.delete("page");
-    return `/courses${next.size ? "?" + next : ""}`;
+    return `${basePath}${next.size ? "?" + next : ""}`;
   };
 
   return (
@@ -47,7 +47,7 @@ export async function CatalogResults({ searchParams, categories }: { searchParam
         <FilterSidebar />
         {courses.length ? (
           <div>
-            <CourseGrid courses={courses} />
+            <CourseGrid courses={courses} basePath={basePath} />
             {totalPages > 1 && (
               <nav className="mt-8 flex items-center justify-center gap-3" aria-label="Pagination">
                 {page > 0 && (
@@ -72,7 +72,7 @@ export async function CatalogResults({ searchParams, categories }: { searchParam
             title="No courses match"
             message="Try fewer filters or a different keyword."
             action={
-              <Link href="/courses" className="ob-btn ob-btn--secondary ob-btn--md no-underline hover:no-underline">
+              <Link href={basePath} className="ob-btn ob-btn--secondary ob-btn--md no-underline hover:no-underline">
                 Clear filters
               </Link>
             }

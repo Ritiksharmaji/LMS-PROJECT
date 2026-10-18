@@ -30,6 +30,12 @@ function subscribe(onChange: () => void) {
 const getSnapshot = () => now || (now = Date.now());
 const getServerSnapshot = () => 0;
 
+/** Current time in the browser (refreshed every minute), or null while prerendering and hydrating. */
+export function useNow(): number | null {
+  const current = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  return current === 0 ? null : current;
+}
+
 /**
  * "2h ago" computed in the browser. The server (and hydration) shows the calendar date, so prerendered HTML is
  * stable and still meaningful.
