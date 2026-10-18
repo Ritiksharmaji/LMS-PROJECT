@@ -1,24 +1,28 @@
+import type { IconWeight } from "@phosphor-icons/react";
 import type { CSSProperties } from "react";
 
-import { ICONS, isIconName, type IconName } from "./icons";
+import { ICONS, isIconName, PLAIN_ICONS, type IconName } from "./icons";
 
 export interface IconProps {
   name: IconName | (string & {});
   size?: number;
   color?: string;
+  /** Defaults to duotone, or regular for interface glyphs. Use "fill" for solid stars and the like. */
+  weight?: IconWeight;
   title?: string;
   className?: string;
   style?: CSSProperties;
 }
 
-/** A Lucide icon by name. Unknown names (e.g. from data) fall back to a book. */
-export function Icon({ name, size = 20, color, title, className, style }: IconProps) {
-  const Glyph = ICONS[isIconName(name) ? name : "book-open"];
+/** A Phosphor icon by name. Unknown names (e.g. from data) fall back to a book. */
+export function Icon({ name, size = 20, color, weight, title, className, style }: IconProps) {
+  const key: IconName = isIconName(name) ? name : "book-open";
+  const Glyph = ICONS[key];
   return (
     <Glyph
       size={size}
-      color={color}
-      strokeWidth={2}
+      color={color ?? "currentColor"}
+      weight={weight ?? (PLAIN_ICONS.has(key) ? "regular" : "duotone")}
       className={"ob-icon" + (className ? " " + className : "")}
       style={style}
       aria-hidden={title ? undefined : true}

@@ -81,7 +81,7 @@ export function VideoLesson({ lesson, cover, section, onEnded }: { lesson: Lesso
   const pct = total ? Math.min(100, (current / total) * 100) : 0;
   const unavailable = !url;
   return (
-    <div ref={frame} style={{ aspectRatio: "16/9", borderRadius: 20, background: "var(--ink-950)", position: "relative", overflow: "hidden", display: "grid", placeItems: "center" }}>
+    <div ref={frame} style={{ aspectRatio: "16/9", borderRadius: 20, background: "var(--night-950)", position: "relative", overflow: "hidden", display: "grid", placeItems: "center" }}>
       <video
         ref={el}
         playsInline
@@ -110,7 +110,7 @@ export function VideoLesson({ lesson, cover, section, onEnded }: { lesson: Lesso
         <div style={{ position: "relative", textAlign: "center", color: "#fff" }}>
           <Icon name="monitor-play" size={36} />
           <div style={{ font: "600 15px var(--font-display)", marginTop: 10 }}>{video.data?.status === "PROCESSING" || video.data?.status === "WAITING_UPLOAD" ? "This video is still processing" : "No video for this lesson yet"}</div>
-          {lesson.content && <div style={{ color: "var(--ink-300)", fontSize: 13, marginTop: 4, maxWidth: 420 }}>{lesson.content}</div>}
+          {lesson.content && <div style={{ color: "var(--night-300)", fontSize: 13, marginTop: 4, maxWidth: 420 }}>{lesson.content}</div>}
         </div>
       ) : (
         !playing && <IconButton icon="play" label="Play" variant="primary" round size="lg" onClick={toggle} style={{ width: 72, height: 72, position: "relative" }} />

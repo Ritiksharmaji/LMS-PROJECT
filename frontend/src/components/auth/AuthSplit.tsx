@@ -1,6 +1,8 @@
 import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
 
+import { ThemeSwitch } from "@/components/theme/ThemeSwitch";
+
 const IMG = (id: string) => `https://images.unsplash.com/photo-${id}?w=1200&h=1400&q=70&auto=format&fit=crop`;
 const vars = (v: Record<string, string | number>) => v as CSSProperties;
 
@@ -19,14 +21,17 @@ export function AuthSplit({ children, image = AUTH_SCENES.student, footer }: { c
           <Link href="/" className="no-underline hover:no-underline" style={{ font: "700 26px/1 var(--font-display)", letterSpacing: "-0.04em", color: "var(--ink-900)" }}>
             orbitly<span className="ob-logo-dot" style={{ color: "var(--coral-500)" }}>.</span>
           </Link>
-          <Link href="/courses" className="ob-btn ob-btn--ghost ob-btn--sm no-underline hover:no-underline">
-            ← Back to courses
-          </Link>
+          <div className="flex items-center gap-2">
+            <ThemeSwitch />
+            <Link href="/courses" className="ob-btn ob-btn--ghost ob-btn--sm no-underline hover:no-underline">
+              ← Back to courses
+            </Link>
+          </div>
         </div>
         <div className="ob-enter-stagger mx-auto flex w-full max-w-[420px] flex-1 flex-col justify-center gap-6 py-10">{children}</div>
         <div style={{ font: "400 12px var(--font-body)", color: "var(--text-subtle)" }}>{footer ?? "© Orbitly · Privacy · Accessibility"}</div>
       </div>
-      <div className="relative m-4 hidden flex-col justify-end overflow-hidden p-12 text-white lg:flex" style={{ borderRadius: 28, background: "var(--ink-950)" }}>
+      <div className="relative m-4 hidden flex-col justify-end overflow-hidden p-12 text-white lg:flex" style={{ borderRadius: 28, background: "var(--night-950)" }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img key={image} src={image} alt="" className="ob-kenburns" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(transparent 30%, rgba(14,16,36,.92))" }} />
@@ -42,7 +47,7 @@ export function AuthSplit({ children, image = AUTH_SCENES.student, footer }: { c
         </div>
         <div className="ob-enter-stagger relative">
           <div style={{ font: "600 40px/48px var(--font-display)", letterSpacing: "-0.03em", maxWidth: 460 }}>Every course, cohort and campus in one orbit.</div>
-          <div style={{ marginTop: 14, color: "var(--ink-300)", fontSize: 15, maxWidth: 420, lineHeight: "24px" }}>
+          <div style={{ marginTop: 14, color: "var(--night-300)", fontSize: 15, maxWidth: 420, lineHeight: "24px" }}>
             Students pick up where they left off. Instructors see who needs help. Admins see the whole picture.
           </div>
         </div>

@@ -10,7 +10,7 @@ const TONES: Record<BadgeTone, [string, string]> = {
   warning: ["var(--warning-soft)", "var(--warning-text)"],
   danger: ["var(--danger-soft)", "var(--danger-text)"],
   info: ["var(--info-soft)", "var(--info-text)"],
-  dark: ["var(--ink-900)", "#fff"],
+  dark: ["var(--ink-900)", "var(--text-inverse)"],
 };
 
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {

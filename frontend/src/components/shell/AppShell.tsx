@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
+import { ThemeSwitch } from "@/components/theme/ThemeSwitch";
 import { Avatar, Icon, IconButton, Input, RelativeTime, Sidebar, Skeleton, type IconName } from "@/components/ui";
 import { api, session } from "@/lib/api";
 import { role as roleLabel } from "@/lib/format";
@@ -86,9 +87,9 @@ function NotifMenu() {
   return (
     <div ref={ref} style={{ position: "relative" }}>
       <IconButton icon="bell" label={count ? `Notifications, ${count} unread` : "Notifications"} onClick={() => setOpen((o) => !o)} aria-expanded={open} />
-      {count > 0 && <i style={{ position: "absolute", top: 9, right: 10, width: 8, height: 8, borderRadius: 9, background: "var(--coral-500)", border: "2px solid #fff", pointerEvents: "none" }} />}
+      {count > 0 && <i style={{ position: "absolute", top: 9, right: 10, width: 8, height: 8, borderRadius: 9, background: "var(--coral-500)", border: "2px solid var(--surface-card)", pointerEvents: "none" }} />}
       {open && (
-        <div role="menu" style={{ position: "absolute", top: 48, right: 0, width: 360, maxWidth: "calc(100vw - 32px)", background: "#fff", borderRadius: 16, boxShadow: "var(--shadow-lg)", border: "1px solid var(--border-subtle)", padding: 8, zIndex: 20 }}>
+        <div role="menu" style={{ position: "absolute", top: 48, right: 0, width: 360, maxWidth: "calc(100vw - 32px)", background: "var(--surface-card)", borderRadius: 16, boxShadow: "var(--shadow-lg)", border: "1px solid var(--border-subtle)", padding: 8, zIndex: 20 }}>
           <div className="flex items-center justify-between" style={{ padding: "8px 10px" }}>
             <span style={{ font: "600 15px var(--font-display)", color: "var(--text-strong)" }}>Notifications</span>
             {count > 0 && (
@@ -143,7 +144,7 @@ function AreaSwitch({ role }: { role: Role }) {
             href={a.href}
             aria-current={on ? "page" : undefined}
             className="no-underline hover:no-underline"
-            style={{ height: 30, padding: "0 12px", borderRadius: 8, font: "600 13px var(--font-body)", display: "flex", alignItems: "center", gap: 6, background: on ? "#fff" : "transparent", color: on ? "var(--text-strong)" : "var(--text-muted)", boxShadow: on ? "var(--shadow-sm)" : "none" }}
+            style={{ height: 30, padding: "0 12px", borderRadius: 8, font: "600 13px var(--font-body)", display: "flex", alignItems: "center", gap: 6, background: on ? "var(--surface-card)" : "transparent", color: on ? "var(--text-strong)" : "var(--text-muted)", boxShadow: on ? "var(--shadow-sm)" : "none" }}
           >
             <i style={{ width: 7, height: 7, borderRadius: 9, background: a.dot }} />
             {a.label}
@@ -199,7 +200,7 @@ function UserMenu() {
         <Icon name="chevron-down" size={16} color="var(--ink-400)" />
       </button>
       {open && (
-        <div role="menu" style={{ position: "absolute", top: 50, right: 0, width: 240, background: "#fff", borderRadius: 14, boxShadow: "var(--shadow-lg)", border: "1px solid var(--border-subtle)", padding: 6, zIndex: 20 }}>
+        <div role="menu" style={{ position: "absolute", top: 50, right: 0, width: 240, background: "var(--surface-card)", borderRadius: 14, boxShadow: "var(--shadow-lg)", border: "1px solid var(--border-subtle)", padding: 6, zIndex: 20 }}>
           {items.map(([ic, l, fn]) => (
             <button key={l} type="button" role="menuitem" className="ob-nav" onClick={() => { setOpen(false); fn(); }}>
               <Icon name={ic} size={18} />
@@ -237,7 +238,7 @@ function SidebarFooter({ role }: { role: Role }) {
   if (role === "ADMIN") {
     const o = org.data;
     return (
-      <div style={{ padding: 14, borderRadius: 14, background: "rgba(255,255,255,.06)", color: "var(--ink-300)", font: "500 12px/18px var(--font-body)" }}>
+      <div style={{ padding: 14, borderRadius: 14, background: "rgba(255,255,255,.06)", color: "var(--night-300)", font: "500 12px/18px var(--font-body)" }}>
         <div style={{ color: "#fff", font: "600 13px var(--font-body)", marginBottom: 4 }}>{o?.name ?? "Organization"}</div>
         {o ? `${o.seatsUsed.toLocaleString("en-US")} ${o.seatLimit ? `of ${o.seatLimit.toLocaleString("en-US")} seats` : "members"}` : "…"}
       </div>
@@ -259,7 +260,7 @@ function SidebarFooter({ role }: { role: Role }) {
   const goal = 5;
   const done = learning.data?.lessonsThisWeek ?? 0;
   return (
-    <div style={{ padding: 14, borderRadius: 14, background: "var(--ink-900)", color: "#fff" }}>
+    <div style={{ padding: 14, borderRadius: 14, background: "var(--night-900)", color: "#fff" }}>
       <div className="flex items-center gap-2" style={{ font: "600 13px var(--font-display)" }}>
         <Icon name="flame" size={18} color="var(--coral-400)" />
         {done} {done === 1 ? "lesson" : "lessons"} this week
@@ -269,7 +270,7 @@ function SidebarFooter({ role }: { role: Role }) {
           <span key={i} style={{ flex: 1, height: 8, borderRadius: 6, background: i < done ? "var(--coral-500)" : "rgba(255,255,255,.1)" }} />
         ))}
       </div>
-      <div style={{ marginTop: 8, font: "400 12px var(--font-body)", color: "var(--ink-300)" }}>
+      <div style={{ marginTop: 8, font: "400 12px var(--font-body)", color: "var(--night-300)" }}>
         {done >= goal ? "Weekly goal reached — nice!" : `${goal - done} to your weekly goal`}
       </div>
     </div>
@@ -325,11 +326,12 @@ export function AppShell({ children }: { children: ReactNode }) {
         </div>
       )}
       <div id="ob-scroll" className="flex min-w-0 flex-1 flex-col overflow-auto">
-        <header className="sticky top-0 z-10 flex flex-none items-center gap-4 px-4 md:px-7" style={{ height: "var(--topbar-h)", borderBottom: "1px solid var(--border-subtle)", background: "rgba(251,250,247,.85)", backdropFilter: "blur(14px)" }}>
+        <header className="sticky top-0 z-10 flex flex-none items-center gap-4 px-4 md:px-7" style={{ height: "var(--topbar-h)", borderBottom: "1px solid var(--border-subtle)", background: "var(--bg-glass)", backdropFilter: "blur(14px)" }}>
           <IconButton icon="menu" label="Open navigation" className="lg:hidden" onClick={() => setDrawer(true)} />
           <TopSearch />
           <div className="flex-1" />
           {role && <AreaSwitch role={role} />}
+          <ThemeSwitch className="ob-hide-sm" />
           <NotifMenu />
           <UserMenu />
         </header>

@@ -131,18 +131,18 @@ export async function CourseDetailView({ slug, orgSlug, basePath = "/courses" }:
   return (
     <div>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
-      <div className="relative grid gap-9 overflow-hidden lg:grid-cols-[minmax(0,1fr)_340px]" style={{ borderRadius: 24, background: "var(--ink-950)", color: "#fff", padding: "32px 36px" }}>
+      <div className="relative grid gap-9 overflow-hidden lg:grid-cols-[minmax(0,1fr)_340px]" style={{ borderRadius: 24, background: "var(--night-panel)", border: "1px solid var(--night-edge)", color: "#fff", padding: "32px 36px" }}>
         <div className="ob-orbit ob-orbit--spin" style={{ width: 420, height: 420, border: "1px dashed rgba(255,255,255,.12)", right: 200, top: -200, ["--t" as string]: "60s" }}>
           <span className="ob-sat" style={{ left: "50%", top: "100%", boxShadow: "none", ["--c" as string]: "var(--coral-500)", ["--s" as string]: "9px" }} />
         </div>
         <div className="ob-enter-stagger relative">
-          <div className="flex items-center gap-1.5" style={{ fontSize: 13, color: "var(--ink-300)" }}>
+          <div className="flex items-center gap-1.5" style={{ fontSize: 13, color: "var(--night-300)" }}>
             {category ? (
-              <Link href={`${basePath}?category=${category.slug}`} style={{ color: "var(--ink-300)" }}>
+              <Link href={`${basePath}?category=${category.slug}`} style={{ color: "var(--night-300)" }}>
                 {category.name}
               </Link>
             ) : (
-              <Link href={basePath} style={{ color: "var(--ink-300)" }}>
+              <Link href={basePath} style={{ color: "var(--night-300)" }}>
                 Courses
               </Link>
             )}
@@ -150,12 +150,12 @@ export async function CourseDetailView({ slug, orgSlug, basePath = "/courses" }:
             {level(c.level)}
           </div>
           <h1 style={{ font: "600 34px/42px var(--font-display)", letterSpacing: "-0.025em", color: "#fff", marginTop: 12 }}>{c.title}</h1>
-          {c.tagline && <p style={{ fontSize: 16, lineHeight: "26px", color: "var(--ink-200)", margin: "10px 0 18px", maxWidth: 560 }}>{c.tagline}</p>}
-          <div className="flex flex-wrap items-center gap-[18px]" style={{ fontSize: 13, color: "var(--ink-200)" }}>
+          {c.tagline && <p style={{ fontSize: 16, lineHeight: "26px", color: "var(--night-200)", margin: "10px 0 18px", maxWidth: 560 }}>{c.tagline}</p>}
+          <div className="flex flex-wrap items-center gap-[18px]" style={{ fontSize: 13, color: "var(--night-200)" }}>
             {c.featured && <Badge tone="accent">Bestseller</Badge>}
             {c.ratingCount > 0 && (
               <span className="flex items-center gap-1.5">
-                <Icon name="star" size={15} color="var(--amber-500)" style={{ fill: "var(--amber-500)" }} />
+                <Icon name="star" size={15} color="var(--amber-500)" weight="fill" />
                 <b style={{ color: "#fff" }}>{Number(c.ratingAvg).toFixed(1)}</b>
                 <span>({count(c.ratingCount)} reviews)</span>
               </span>
@@ -178,7 +178,7 @@ export async function CourseDetailView({ slug, orgSlug, basePath = "/courses" }:
             </div>
           )}
         </div>
-        <div className="ob-float-in relative self-start overflow-hidden" style={{ ["--d" as string]: 250, background: "#fff", borderRadius: 18, color: "var(--text-body)", boxShadow: "var(--shadow-lg)" }}>
+        <div className="ob-float-in relative self-start overflow-hidden" style={{ ["--d" as string]: 250, background: "var(--surface-card)", borderRadius: 18, color: "var(--text-body)", boxShadow: "var(--shadow-lg)" }}>
           <div style={{ position: "relative", aspectRatio: "16/9", background: `var(--${c.hue}-100)`, color: `var(--${c.hue}-500)`, display: "grid", placeItems: "center" }}>
             {c.coverUrl ? (
               // eslint-disable-next-line @next/next/no-img-element
@@ -187,7 +187,7 @@ export async function CourseDetailView({ slug, orgSlug, basePath = "/courses" }:
               <Icon name={c.icon} size={44} />
             )}
             <span style={{ position: "absolute", inset: 0, display: "grid", placeItems: "center", background: "linear-gradient(transparent 40%, rgba(14,16,36,.55))" }}>
-              <span style={{ width: 56, height: 56, borderRadius: 99, background: "rgba(255,255,255,.95)", display: "grid", placeItems: "center", color: "var(--ink-900)", boxShadow: "var(--shadow-md)" }}>
+              <span style={{ width: 56, height: 56, borderRadius: 99, background: "rgba(255,255,255,.95)", display: "grid", placeItems: "center", color: "var(--night-900)", boxShadow: "var(--shadow-md)" }}>
                 <Icon name="play" size={22} />
               </span>
             </span>
