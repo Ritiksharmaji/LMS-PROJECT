@@ -276,3 +276,64 @@ button{font-family:inherit}
 :focus-visible{outline-color:var(--accent)}
 @media (max-width:760px){.ob-hide-sm{display:none!important}}
 }
+
+/* ---------- Motion ----------
+   Subtle, CSS-only. `.ob-reveal` / `.ob-stagger` are revealed by <MotionObserver> (adds `.is-in`);
+   they're only hidden when scripting is on, and everything here stops under prefers-reduced-motion. */
+@layer components {
+@keyframes ob-spin{to{transform:rotate(360deg)}}
+@keyframes ob-spin-rev{to{transform:rotate(-360deg)}}
+@keyframes ob-drift{from{transform:rotate(0) translateX(10px) rotate(0)}to{transform:rotate(360deg) translateX(10px) rotate(-360deg)}}
+@keyframes ob-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes ob-rise{from{opacity:0;transform:translateY(18px)}}
+@keyframes ob-word{from{opacity:0;transform:translateY(.45em);filter:blur(6px)}}
+@keyframes ob-draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes ob-img-in{from{opacity:0;transform:scale(1.06)}}
+@keyframes ob-pulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--coral-500) 45%,transparent)}50%{box-shadow:0 0 0 7px transparent}}
+
+/* Hero entrance: words, then supporting copy */
+.ob-enter{animation:ob-rise .8s var(--ease-out) both;animation-delay:calc(var(--d,0) * 1ms)}
+.ob-words{isolation:isolate}
+.ob-words .ob-word{display:inline-block;animation:ob-word .8s var(--ease-out) both;animation-delay:calc(var(--i) * 70ms + 100ms)}
+.ob-mark{position:relative;white-space:nowrap}
+.ob-mark::after{content:"";position:absolute;left:0;right:0;bottom:.04em;height:.14em;border-radius:99px;background:var(--coral-500);opacity:.85;z-index:-1;transform-origin:left;transform:scaleX(0);animation:ob-draw .9s var(--ease-out) .9s forwards}
+
+/* Hero art: orbits, satellites, floating cards */
+.ob-hero-art{isolation:isolate}
+.ob-hero-img{animation:ob-img-in 1.2s var(--ease-out) both}
+.ob-orbit{position:absolute;border-radius:50%;pointer-events:none}
+.ob-orbit--spin{animation:ob-spin var(--t,40s) linear infinite}
+.ob-orbit--rev{animation:ob-spin-rev var(--t,50s) linear infinite}
+.ob-orbit--drift{animation:ob-drift var(--t,14s) linear infinite}
+.ob-sat{position:absolute;width:var(--s,10px);height:var(--s,10px);margin:calc(var(--s,10px) / -2);border-radius:50%;background:var(--c,var(--coral-500));box-shadow:0 0 0 4px #fff}
+.ob-sat--pulse{animation:ob-pulse 2.6s ease-in-out infinite}
+.ob-float{animation:ob-float var(--t,6s) ease-in-out infinite;animation-delay:var(--delay,0s)}
+.ob-float-in{animation:ob-rise .9s var(--ease-out) both;animation-delay:calc(var(--d,0) * 1ms)}
+
+/* Scroll reveal */
+@media (scripting:enabled){
+  .ob-reveal:not(.is-in){opacity:0;transform:translateY(22px)}
+  .ob-stagger:not(.is-in)>*{opacity:0}
+}
+.ob-reveal{transition:opacity .7s var(--ease-out),transform .7s var(--ease-out)}
+.ob-stagger.is-in>*{animation:ob-rise .7s var(--ease-out) backwards}
+.ob-stagger.is-in>:nth-child(2){animation-delay:70ms}.ob-stagger.is-in>:nth-child(3){animation-delay:140ms}
+.ob-stagger.is-in>:nth-child(4){animation-delay:210ms}.ob-stagger.is-in>:nth-child(5){animation-delay:280ms}
+.ob-stagger.is-in>:nth-child(6){animation-delay:350ms}.ob-stagger.is-in>:nth-child(n+7){animation-delay:420ms}
+
+/* Hover polish */
+.ob-card--interactive:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.ob-course__cover img,.ob-zoom img{transition:transform .6s var(--ease-out)}
+.ob-card--interactive:hover .ob-course__cover img,.ob-zoom:hover img{transform:scale(1.05)}
+.ob-zoom{transition:transform var(--dur-base) var(--ease-out),box-shadow var(--dur-base) var(--ease-out)}
+.ob-zoom:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.ob-btn__end{transition:transform var(--dur-base) var(--ease-out)}
+.ob-btn:hover:not(:disabled) .ob-btn__end{transform:translateX(3px)}
+
+@media (prefers-reduced-motion:reduce){
+  .ob-enter,.ob-words .ob-word,.ob-hero-img,.ob-float-in,.ob-orbit--spin,.ob-orbit--rev,.ob-orbit--drift,.ob-float,.ob-sat--pulse{animation:none!important}
+  .ob-mark::after{animation:none;transform:none}
+  .ob-reveal,.ob-stagger>*{opacity:1!important;transform:none!important;transition:none!important;animation:none!important}
+  .ob-card--interactive:hover,.ob-zoom:hover,.ob-card--interactive:hover .ob-course__cover img,.ob-zoom:hover img,.ob-btn:hover .ob-btn__end{transform:none}
+}
+}
