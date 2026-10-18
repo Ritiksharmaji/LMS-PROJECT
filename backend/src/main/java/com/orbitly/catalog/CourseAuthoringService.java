@@ -48,16 +48,20 @@ class CourseAuthoringService {
 
 	private final UserDirectory directory;
 
+	private final org.springframework.context.ApplicationEventPublisher events;
+
 	private final Clock clock;
 
 	CourseAuthoringService(CourseRepository courses, SectionRepository sections, LessonRepository lessons,
-			CategoryRepository categories, CourseViews views, UserDirectory directory, Clock clock) {
+			CategoryRepository categories, CourseViews views, UserDirectory directory,
+			org.springframework.context.ApplicationEventPublisher events, Clock clock) {
 		this.courses = courses;
 		this.sections = sections;
 		this.lessons = lessons;
 		this.categories = categories;
 		this.views = views;
 		this.directory = directory;
+		this.events = events;
 		this.clock = clock;
 	}
 
@@ -170,6 +174,7 @@ class CourseAuthoringService {
 		c.setStatus(CourseStatus.PUBLISHED);
 		if (c.getPublishedAt() == null) {
 			c.setPublishedAt(clock.instant());
+			events.publishEvent(new CatalogEvents.CoursePublished(c.getOrgId(), c.getId(), c.getInstructorId(), c.getTitle()));
 		}
 		return editor(c);
 	}
