@@ -10,7 +10,13 @@ import type { CategoryView, CertificateView, CourseCard, CourseDetail, OrgView, 
  * refreshed every few minutes.
  */
 async function get<T>(path: string): Promise<T | null> {
-  const res = await fetch(`${API_URL}/api/public${path}`, { headers: { accept: "application/json" } });
+  let res: Response;
+  try {
+    res = await fetch(`${API_URL}/api/public${path}`, { headers: { accept: "application/json" } });
+  } catch {
+    // API unreachable (e.g. during `next build` without a running API): render empty, refresh on the next cache cycle.
+    return null;
+  }
   if (res.status === 404) return null;
   if (!res.ok) throw new Error(`GET ${path} failed with ${res.status}`);
   return (await res.json()) as T;

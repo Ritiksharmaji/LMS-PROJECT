@@ -85,6 +85,22 @@ const QUIZ = [
   { prompt: "How is the final project assessed?", kind: "SINGLE", options: ["It is not assessed", "Peer review only", "Graded by the instructor with feedback"], correct: [2] },
 ];
 
+// Photos from the design (Unsplash).
+const IMG = (id, w, h) => `https://images.unsplash.com/photo-${id}?w=${w}&h=${h}&q=70&auto=format&fit=crop`;
+const COVERS = {
+  ml: "1677442136019-21780ecad995", python: "1526379095098-d400fd0bf935", react: "1633356122544-f134324a6cee",
+  design: "1561070791-2526d30994b5", stats: "1460925895917-afdab827c52f", sql: "1551288049-bebda4e38f71",
+  strategy: "1552664730-d307ca884978", writing: "1455390582262-044cdead277a", dl: "1620712943543-bcc4688e7485",
+  ux: "1586717791821-3f44a563fa4c", finance: "1554224155-6726b3ff858f", calc: "1509228468518-180dd4864904",
+};
+const PHOTOS = {
+  "Maya Okafor": "1580489944761-15a19d654956", "Dr. Lena Park": "1573496359142-b8d87734a5a2", "Prof. Arun Mehta": "1507003211169-0a1dd7228f2d",
+  "Jonas Weber": "1472099645785-5658abf4ff4e", "Dr. Ruth Adeyemi": "1494790108377-be9c29b29330", "Mei Tanaka": "1534528741775-53994a69daeb",
+  "Carlos Mendes": "1500648767791-00dcc994a43e", "Aisha Rahman": "1544005313-94ddf0286df2", "Ada Lovelace": "1519085360753-af0119f7cbe7",
+  "Leo Brandt": "1506794778202-cad84cf45f1d", "Priya Shah": "1438761681033-6461ffad8d80", "Aiko Sato": "1487412720507-e7ab37603c6f",
+  "Tomás Rivera": "1560250097-0b93528c311a",
+};
+
 const SAMPLE_VIDEO = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
 
 const days = (n) => new Date(Date.now() + n * 86_400_000).toISOString();
@@ -129,6 +145,10 @@ async function main() {
   }
   await invite(INSTRUCTORS, "INSTRUCTOR");
   await invite(STUDENTS, "STUDENT");
+  await call("PATCH", "/me", { avatarUrl: IMG(PHOTOS["Ada Lovelace"], 160, 160) }, A);
+  for (const [name, auth] of Object.entries(people)) {
+    if (PHOTOS[name]) await call("PATCH", "/me", { avatarUrl: IMG(PHOTOS[name], 160, 160) }, auth.accessToken);
+  }
   console.log(`  ${INSTRUCTORS.length} instructors, ${STUDENTS.length} students`);
 
   // Courses
@@ -147,6 +167,7 @@ async function main() {
         priceCents,
         hue,
         icon,
+        coverUrl: IMG(COVERS[key], 1280, 720),
         description:
           `${tagline}\n\nThis course is taught by ${instructor}. Each module mixes short videos, readings and practice so you ` +
           `build real skill, not just familiarity. You'll finish with a project you can show.`,
@@ -286,7 +307,7 @@ async function main() {
   );
   await call("POST", `/me/threads/${thread.thread.id}/replies`, { body: "Each step overshoots the minimum, so you land on the other side of the valley — and it keeps happening. Try halving it." }, lena);
 
-  console.log("Done. Sign in at http://localhost:3000/login");
+  console.log(`Done. Sign in at ${process.env.APP_URL ?? "http://localhost:3000"}/login`);
   console.log(`  admin       ada@northfield.demo`);
   console.log(`  instructor  ${email("Dr. Lena Park")}`);
   console.log(`  student     ${email("Maya Okafor")}`);
