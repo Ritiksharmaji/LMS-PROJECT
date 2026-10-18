@@ -10,3 +10,9 @@ spring:
 logging:
   level:
     org.springframework.security: WARN
+
+orbitly:
+  billing:
+    provider: test
+    stripe:
+      webhook-secret: whsec_test_secret

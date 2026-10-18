@@ -60,3 +60,10 @@ orbitly:
     issuer: orbitly
     access-token-ttl: 15m
     refresh-token-ttl: 30d
+  billing:
+    # "test" (no real payments) or "stripe"
+    provider: ${BILLING_PROVIDER:test}
+    refund-window: 30d
+    stripe:
+      secret-key: ${STRIPE_SECRET_KEY:}
+      webhook-secret: ${STRIPE_WEBHOOK_SECRET:}

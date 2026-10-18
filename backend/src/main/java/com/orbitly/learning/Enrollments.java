@@ -67,6 +67,15 @@ public class Enrollments {
 		return e.getId();
 	}
 
+	/** Removes an enrollment (e.g. after a refund). Lesson progress is kept in case they enroll again. */
+	@Transactional
+	public void revoke(UUID userId, UUID courseId) {
+		enrollments.findByUserIdAndCourseId(userId, courseId).ifPresent(e -> {
+			enrollments.delete(e);
+			catalog.recordEnrollment(courseId, -1);
+		});
+	}
+
 	/** Course ids the user is enrolled in within the organization. */
 	@Transactional(readOnly = true)
 	public List<UUID> courseIds(UUID orgId, UUID userId) {
