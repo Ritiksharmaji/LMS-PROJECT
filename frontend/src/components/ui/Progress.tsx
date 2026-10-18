@@ -54,7 +54,8 @@ export function ProgressRing({ value = 0, size = 56, stroke = 6, color = "var(--
           strokeLinecap="round"
           strokeDasharray={c}
           strokeDashoffset={off}
-          style={{ transition: "stroke-dashoffset var(--dur-slow) var(--ease-out)" }}
+          className="ob-ring-fill"
+          style={{ transition: "stroke-dashoffset var(--dur-slow) var(--ease-out)", ["--ring-c" as string]: c }}
         />
       </svg>
       <span style={{ position: "relative", font: `600 ${Math.round(size * 0.24)}px var(--font-display)`, color: "var(--text-strong)", letterSpacing: "-0.02em" }}>

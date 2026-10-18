@@ -14,7 +14,7 @@ function home(role: string) {
 export function Mark({ dark }: { dark?: boolean }) {
   return (
     <Link href="/" aria-label="Orbitly home" className="no-underline hover:no-underline" style={{ font: "700 26px/1 var(--font-display)", letterSpacing: "-0.04em", color: dark ? "#fff" : "var(--ink-900)" }}>
-      orbitly<span style={{ color: "var(--coral-500)" }}>.</span>
+      orbitly<span className="ob-logo-dot" style={{ color: "var(--coral-500)" }}>.</span>
     </Link>
   );
 }

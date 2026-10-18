@@ -60,7 +60,7 @@ export function MyLearning({ tab }: { tab: Tab }) {
           <EmptyState icon="heart" title="Your wishlist is empty" message="Find a course you like in the catalog." action={<Button href="/learn/browse">Browse courses</Button>} />
         )
       ) : list.length ? (
-        <div className="grid gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
+        <div className="ob-stagger grid gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
           {list.map((e) => (
             <CourseCard
               key={e.id}

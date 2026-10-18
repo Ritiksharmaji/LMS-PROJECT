@@ -333,7 +333,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <NotifMenu />
           <UserMenu />
         </header>
-        <main className="mx-auto w-full flex-1 px-4 pb-12 pt-7 md:px-8" style={{ maxWidth: "var(--content-max)" }}>
+        <main className="ob-page mx-auto w-full flex-1 px-4 pb-12 pt-7 md:px-8" style={{ maxWidth: "var(--content-max)" }}>
           {children}
         </main>
       </div>
