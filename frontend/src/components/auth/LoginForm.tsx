@@ -78,7 +78,7 @@ export function LoginForm({ org, ssoUrl }: { org: OrgView | null; ssoUrl?: strin
               aria-checked={a}
               aria-label={`${r.label}: ${r.desc}`}
               onClick={() => setRole(r.id)}
-              style={{ textAlign: "left", padding: 14, borderRadius: 14, cursor: "pointer", background: a ? "#fff" : "transparent", border: "1.5px solid " + (a ? `var(--role-${r.id})` : "var(--border-default)"), boxShadow: a ? "var(--shadow-md)" : "none", transition: "all 200ms var(--ease-out)" }}
+              style={{ textAlign: "left", padding: 14, borderRadius: 14, cursor: "pointer", background: a ? "var(--surface-card)" : "transparent", border: "1.5px solid " + (a ? `var(--role-${r.id})` : "var(--border-default)"), boxShadow: a ? "var(--shadow-md)" : "none", transition: "all 200ms var(--ease-out)" }}
             >
               <span style={{ width: 34, height: 34, borderRadius: 10, display: "grid", placeItems: "center", background: `var(--role-${r.id}-soft)`, color: r.id === "admin" ? "var(--ink-900)" : `var(--role-${r.id})` }}>
                 <Icon name={r.icon} size={18} />

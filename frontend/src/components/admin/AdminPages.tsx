@@ -54,7 +54,7 @@ function CategoryDialog({ category, onClose }: { category: CategoryView | "new";
           <div className="ob-label mb-2">Colour</div>
           <div className="flex gap-2">
             {(Object.keys(HUES) as Hue[]).map((h) => (
-              <button key={h} type="button" aria-label={h} aria-pressed={hue === h} onClick={() => setHue(h)} style={{ width: 30, height: 30, borderRadius: 99, cursor: "pointer", background: HUES[h][1], border: hue === h ? "3px solid var(--ink-900)" : "3px solid #fff", boxShadow: "var(--shadow-sm)" }} />
+              <button key={h} type="button" aria-label={h} aria-pressed={hue === h} onClick={() => setHue(h)} style={{ width: 30, height: 30, borderRadius: 99, cursor: "pointer", background: HUES[h][1], border: hue === h ? "3px solid var(--ink-900)" : "3px solid var(--surface-card)", boxShadow: "var(--shadow-sm)" }} />
             ))}
           </div>
         </div>
@@ -62,7 +62,7 @@ function CategoryDialog({ category, onClose }: { category: CategoryView | "new";
           <div className="ob-label mb-2">Icon</div>
           <div className="grid grid-cols-6 gap-1.5">
             {CATEGORY_ICONS.map((i) => (
-              <button key={i} type="button" aria-label={i} aria-pressed={icon === i} onClick={() => setIcon(i)} style={{ height: 36, borderRadius: 8, display: "grid", placeItems: "center", cursor: "pointer", border: "1px solid " + (icon === i ? "var(--accent)" : "var(--border-subtle)"), background: icon === i ? "var(--accent-soft)" : "#fff" }}>
+              <button key={i} type="button" aria-label={i} aria-pressed={icon === i} onClick={() => setIcon(i)} style={{ height: 36, borderRadius: 8, display: "grid", placeItems: "center", cursor: "pointer", border: "1px solid " + (icon === i ? "var(--accent)" : "var(--border-subtle)"), background: icon === i ? "var(--accent-soft)" : "var(--surface-card)" }}>
                 <Icon name={i} size={18} />
               </button>
             ))}

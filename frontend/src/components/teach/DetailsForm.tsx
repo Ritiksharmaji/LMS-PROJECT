@@ -125,7 +125,7 @@ export function DetailsForm({ editor, onSaved }: { editor: CourseEditorView; onS
           </div>
           <div className="flex gap-2">
             {(Object.keys(HUES) as Hue[]).map((h) => (
-              <button key={h} type="button" aria-label={h} aria-pressed={form.hue === h} onClick={() => set("hue", h)} style={{ width: 30, height: 30, borderRadius: 99, cursor: "pointer", background: HUES[h][1], border: form.hue === h ? "3px solid var(--ink-900)" : "3px solid #fff", boxShadow: "var(--shadow-sm)" }} />
+              <button key={h} type="button" aria-label={h} aria-pressed={form.hue === h} onClick={() => set("hue", h)} style={{ width: 30, height: 30, borderRadius: 99, cursor: "pointer", background: HUES[h][1], border: form.hue === h ? "3px solid var(--ink-900)" : "3px solid var(--surface-card)", boxShadow: "var(--shadow-sm)" }} />
             ))}
           </div>
           <div className="ob-label" style={{ margin: "16px 0 8px" }}>
@@ -133,7 +133,7 @@ export function DetailsForm({ editor, onSaved }: { editor: CourseEditorView; onS
           </div>
           <div className="grid grid-cols-6 gap-1.5">
             {ICON_CHOICES.map((i) => (
-              <button key={i} type="button" aria-label={i} aria-pressed={form.icon === i} onClick={() => set("icon", i)} style={{ height: 36, borderRadius: 8, display: "grid", placeItems: "center", cursor: "pointer", border: "1px solid " + (form.icon === i ? "var(--accent)" : "var(--border-subtle)"), background: form.icon === i ? "var(--accent-soft)" : "#fff", color: form.icon === i ? "var(--coral-700)" : "var(--ink-600)" }}>
+              <button key={i} type="button" aria-label={i} aria-pressed={form.icon === i} onClick={() => set("icon", i)} style={{ height: 36, borderRadius: 8, display: "grid", placeItems: "center", cursor: "pointer", border: "1px solid " + (form.icon === i ? "var(--accent)" : "var(--border-subtle)"), background: form.icon === i ? "var(--accent-soft)" : "var(--surface-card)", color: form.icon === i ? "var(--coral-700)" : "var(--ink-600)" }}>
                 <Icon name={i} size={18} />
               </button>
             ))}

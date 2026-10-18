@@ -32,7 +32,7 @@ function RowMenu({ member, isMe, onAction }: { member: MemberView; isMe: boolean
     <div ref={ref} style={{ position: "relative" }}>
       <IconButton icon="ellipsis" label={`Actions for ${member.fullName}`} size="sm" onClick={() => setOpen((o) => !o)} aria-expanded={open} />
       {open && (
-        <div role="menu" style={{ position: "absolute", right: 0, top: 36, width: 220, background: "#fff", borderRadius: 14, boxShadow: "var(--shadow-lg)", border: "1px solid var(--border-subtle)", padding: 6, zIndex: 20 }}>
+        <div role="menu" style={{ position: "absolute", right: 0, top: 36, width: 220, background: "var(--surface-card)", borderRadius: 14, boxShadow: "var(--shadow-lg)", border: "1px solid var(--border-subtle)", padding: 6, zIndex: 20 }}>
           {(["STUDENT", "INSTRUCTOR", "ADMIN"] as Role[]).filter((r) => r !== member.role).map((r) => item(`Make ${roleLabel(r).toLowerCase()}`, "shield-check", () => onAction({ role: r })))}
           {!isMe && (member.status === "ACTIVE" ? item("Suspend", "ban", () => onAction({ status: "SUSPENDED" })) : item("Reactivate", "rotate-ccw", () => onAction({ status: "ACTIVE" })))}
           {!isMe && item("Remove from organization", "trash-2", () => onAction({ remove: true }), true)}

@@ -19,9 +19,7 @@ export function PageHead({ overline, title, sub, actions }: { overline?: ReactNo
 export function EmptyState({ icon = "book-open", title, message, action }: { icon?: IconProps["name"]; title: ReactNode; message?: ReactNode; action?: ReactNode }) {
   return (
     <div className="ob-card ob-card--sunken" style={{ padding: 56, textAlign: "center" }}>
-      <span className="ob-empty-icon">
-        <Icon name={icon} size={28} color="var(--ink-400)" />
-      </span>
+      <Icon name={icon} size={28} color="var(--ink-400)" />
       <div style={{ font: "600 17px var(--font-display)", color: "var(--text-strong)", marginTop: 12 }}>{title}</div>
       {message && <p style={{ margin: "6px auto 0", maxWidth: 420, color: "var(--text-muted)" }}>{message}</p>}
       {action && <div style={{ marginTop: 18 }}>{action}</div>}

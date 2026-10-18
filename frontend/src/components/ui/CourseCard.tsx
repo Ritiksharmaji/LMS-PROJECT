@@ -69,7 +69,7 @@ export function CourseCard({
         <div className="ob-course__title">{title}</div>
         {rating != null && rating > 0 && (
           <div style={{ display: "flex", alignItems: "center", gap: 6, font: "600 13px var(--font-body)", color: "var(--text-strong)" }}>
-            <Icon name="star" size={14} color="var(--amber-500)" style={{ fill: "var(--amber-500)" }} />
+            <Icon name="star" size={14} color="var(--amber-500)" weight="fill" />
             {rating.toFixed(1)}
             {reviews != null && <span style={{ fontWeight: 400, color: "var(--text-muted)" }}>({reviews.toLocaleString("en-US")})</span>}
           </div>
