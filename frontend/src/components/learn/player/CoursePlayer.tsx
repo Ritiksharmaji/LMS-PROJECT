@@ -50,7 +50,7 @@ function ReviewDialog({ courseId, open, onClose }: { courseId: string; open: boo
       <div className="mb-3.5 flex gap-1.5" role="radiogroup" aria-label="Rating">
         {[1, 2, 3, 4, 5].map((n) => (
           <button key={n} type="button" role="radio" aria-checked={rating === n} aria-label={`${n} star${n > 1 ? "s" : ""}`} onClick={() => setRating(n)} style={{ background: "none", border: 0, padding: 2, cursor: "pointer" }}>
-            <Icon name="star" size={28} color="var(--amber-500)" style={{ fill: n <= rating ? "var(--amber-500)" : "transparent" }} />
+            <Icon name="star" size={28} color="var(--amber-500)" weight={n <= rating ? "fill" : "regular"} />
           </button>
         ))}
       </div>
