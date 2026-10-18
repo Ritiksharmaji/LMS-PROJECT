@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: ${TEST_DB_URL:jdbc:postgresql://localhost:5432/orbitly_test}
+  flyway:
+    clean-disabled: false
+  mail:
+    host: localhost
+    port: 1025
+
+logging:
+  level:
+    org.springframework.security: WARN
+
+orbitly:
+  notifications:
+    async: false
+    reminders: false
+  media:
+    storage: local
+    local:
+      root: ./build/test-storage
+    mux:
+      webhook-secret: mux_test_secret
+  billing:
+    provider: test
+    stripe:
+      webhook-secret: whsec_test_secret
