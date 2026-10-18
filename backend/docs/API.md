@@ -80,3 +80,34 @@ Rules: an organization always keeps at least one active admin; seat limits cap a
 | PUT / DELETE | `/api/admin/categories/{id}` | Update / delete (courses become uncategorized) |
 
 Courses keep `durationMinutes`, `lessonCount`, `enrollmentCount`, `ratingAvg` and `ratingCount` up to date for cards.
+
+## Learning (`backend-04-learning`)
+
+### My learning (signed in)
+| Method | Path | Purpose |
+|---|---|---|
+| POST | `/api/me/enrollments` | Enroll in a free course (`courseId`). Paid courses return `402 payment_required` |
+| GET | `/api/me/enrollments?status=ACTIVE\|COMPLETED` | My courses with progress (most recently opened first) |
+| GET | `/api/me/learning/summary` | In progress / completed counts, lessons done this week, minutes learned, continue-learning list |
+| GET | `/api/me/courses/{courseId}/player` | Player sidebar: sections, lessons with `completed`, progress, `resumeLessonId` |
+| GET | `/api/me/lessons/{lessonId}` | Lesson content, completion, video `positionSeconds`, previous/next lesson ids |
+| POST / DELETE | `/api/me/lessons/{lessonId}/complete` | Mark a VIDEO/READING lesson done / not done |
+| PUT | `/api/me/lessons/{lessonId}/position` | Save video resume position (`seconds`) |
+| PUT / DELETE | `/api/me/courses/{courseId}/review` | Write or update my review (1–5 + comment) / delete it |
+
+Access: enrolled learners, the course's instructor and admins (staff see `staffPreview: true`).
+Finishing every lesson sets the enrollment to COMPLETED and issues a certificate code.
+
+### Public
+| Method | Path | Purpose |
+|---|---|---|
+| GET | `/api/public/organizations/{org}/courses/{courseId}/reviews` | Paged reviews with reviewer name |
+| GET | `/api/public/organizations/{org}/courses/{courseId}/reviews/summary` | Average, count, 1–5 histogram |
+| GET | `/api/public/certificates/{code}` | Verify a certificate |
+
+### Course staff (course instructor or ADMIN)
+| Method | Path | Purpose |
+|---|---|---|
+| GET | `/api/instructor/courses/{courseId}/learners` | Roster with progress and last activity |
+| POST | `/api/instructor/courses/{courseId}/learners` | Enroll members directly (`userIds`), free of charge |
+| DELETE | `/api/instructor/enrollments/{id}` | Remove a learner |
