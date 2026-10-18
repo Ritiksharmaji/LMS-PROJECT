@@ -3,7 +3,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 
-import { MotionObserver } from "@/components/motion/MotionObserver";
 import { ToastProvider } from "@/components/ui/Toast";
 import { ApiError } from "@/lib/api";
 
@@ -22,10 +21,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   );
   return (
     <QueryClientProvider client={client}>
-      <ToastProvider>
-        {children}
-        <MotionObserver />
-      </ToastProvider>
+      <ToastProvider>{children}</ToastProvider>
     </QueryClientProvider>
   );
 }

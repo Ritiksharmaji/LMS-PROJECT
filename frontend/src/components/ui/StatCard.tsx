@@ -1,5 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
 
+import { CountUp } from "@/components/motion/CountUp";
+
 import { Card } from "./Card";
 import { Icon, type IconProps } from "./Icon";
 
@@ -36,7 +38,7 @@ export function StatCard({ label, value, delta, trend = "up", icon, tone = "cora
             </span>
           )}
         </div>
-        <div className="ob-stat__value">{value}</div>
+        <div className="ob-stat__value">{typeof value === "string" || typeof value === "number" ? <CountUp value={String(value)} /> : value}</div>
         {(delta || hint) && (
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             {delta && (

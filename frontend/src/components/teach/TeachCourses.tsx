@@ -53,7 +53,7 @@ export function TeachCourses() {
       ) : !list.length ? (
         <EmptyState icon="book-plus" title="No courses here" message="Create a draft, add lessons, then publish it to the catalog." action={<Button onClick={() => setCreate(true)}>Create a course</Button>} />
       ) : (
-        <div className="grid gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
+        <div className="ob-stagger grid gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
           {list.map((c) => {
             const [label, tone] = STATUS_BADGE[c.status];
             return <CourseCard key={c.id} {...cardProps(c)} href={`/teach/courses/${c.id}`} badge={<Badge tone={tone} dot>{label}</Badge>} />;
