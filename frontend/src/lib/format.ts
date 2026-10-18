@@ -1,7 +1,13 @@
 import type { CourseLevel, Role } from "./types";
 
+/** A course price: 0 reads "Free". */
 export function price(cents: number, currency = "USD"): string {
   if (cents === 0) return "Free";
+  return money(cents, currency);
+}
+
+/** A money amount (totals, refunds): 0 reads "$0.00". */
+export function money(cents: number, currency = "USD"): string {
   return new Intl.NumberFormat("en-US", { style: "currency", currency }).format(cents / 100);
 }
 
