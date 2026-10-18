@@ -58,8 +58,9 @@ For production set, at minimum: `JWT_SECRET`, `APP_URL`, `MAIL_MODE=smtp` + SMTP
 
 | Branch | Contents |
 |---|---|
-| `main` | Initial commit |
-| `development` | Integration branch (includes the finished backend) |
+| `main` | The complete app (everything below, merged) |
+| `development` | Integration branch: backend + frontend |
 | `backend` ← `backend-01-setup` … `backend-11-analytics` | API, one branch per module |
-| `frontend` ← `frontend-01-setup` … `frontend-07-admin` | Web app, one branch per module |
-| `frontend-08-complete` | The full app in one branch: error pages, Docker, smoke test, this README (not merged) |
+| `frontend` ← `frontend-01-setup` … `frontend-09-motion` | Web app, one branch per module |
+| `frontend-08-complete` | Error pages, Docker, smoke test, this README |
+| `frontend-09-motion` | Landing hero animation, scroll reveals and hover polish |

@@ -14,7 +14,7 @@ export function CourseGrid({ courses, cols = 3, basePath = "/courses" }: { cours
   const { data: enrollments } = useEnrollments(!!role);
   const byCourse = new Map((enrollments ?? []).map((e) => [e.course.id, e]));
   return (
-    <div className={"grid gap-[18px] sm:grid-cols-2 " + (cols === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3")}>
+    <div className={"ob-stagger grid gap-[18px] sm:grid-cols-2 " + (cols === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3")}>
       {courses.map((c) => {
         const e = byCourse.get(c.id);
         return (

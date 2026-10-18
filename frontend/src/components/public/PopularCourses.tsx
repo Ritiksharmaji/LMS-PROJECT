@@ -30,7 +30,7 @@ export function PopularCourses({ categories, courses }: { categories: CategoryVi
           <Tabs value={cat} onChange={setCat} items={withCourses.map((c) => ({ label: c.name, value: c.name }))} style={{ margin: "18px 0 20px" }} />
         </div>
       )}
-      <div className="grid gap-[18px] sm:grid-cols-2 lg:grid-cols-4">
+      <div className="ob-stagger grid gap-[18px] sm:grid-cols-2 lg:grid-cols-4">
         {list.map((c) => (
           <CourseCard key={c.id} {...cardProps(c)} href={courseHref(c)} badge={c.featured ? <Badge tone="dark">Bestseller</Badge> : null} />
         ))}
