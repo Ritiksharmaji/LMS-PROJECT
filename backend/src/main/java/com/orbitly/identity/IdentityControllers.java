@@ -55,8 +55,23 @@ final class IdentityControllers {
 
 		private final AuthService auth;
 
-		AuthController(AuthService auth) {
+		private final PasswordResetService passwordResets;
+
+		AuthController(AuthService auth, PasswordResetService passwordResets) {
 			this.auth = auth;
+			this.passwordResets = passwordResets;
+		}
+
+		@PostMapping("/password/forgot")
+		@ResponseStatus(HttpStatus.ACCEPTED)
+		void forgotPassword(@Valid @RequestBody IdentityDtos.ForgotPasswordRequest req) {
+			passwordResets.requestReset(req.email());
+		}
+
+		@PostMapping("/password/reset")
+		@ResponseStatus(HttpStatus.NO_CONTENT)
+		void resetPassword(@Valid @RequestBody IdentityDtos.ResetPasswordRequest req) {
+			passwordResets.reset(req.token(), req.password());
 		}
 
 		@PostMapping("/register-organization")

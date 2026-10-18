@@ -17,4 +17,8 @@ public final class IdentityEvents {
 
 	public record MemberJoined(UUID orgId, UUID userId, Role role) {
 	}
+
+	/** Not tied to an organization: one account, one password. */
+	public record PasswordResetRequested(UUID userId, String email, String fullName, String link, Instant expiresAt) {
+	}
 }

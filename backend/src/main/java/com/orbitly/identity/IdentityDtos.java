@@ -46,6 +46,12 @@ public final class IdentityDtos {
 			@NotBlank @Size(min = 8, max = 128) String password) {
 	}
 
+	public record ForgotPasswordRequest(@NotBlank @Email String email) {
+	}
+
+	public record ResetPasswordRequest(@NotBlank String token, @NotBlank @Size(min = 8, max = 128) String password) {
+	}
+
 	public record UpdateProfileRequest(@Size(min = 1, max = 160) String fullName, @Size(max = 500) String avatarUrl) {
 	}
 

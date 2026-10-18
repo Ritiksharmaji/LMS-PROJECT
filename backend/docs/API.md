@@ -15,6 +15,8 @@ Errors are `application/problem+json` with a `code` field. Live docs: `/api/docs
 | POST | `/api/auth/logout` | Revoke a refresh token |
 | GET | `/api/auth/invites/{token}` | Invite preview (org, role, whether the email already has an account) |
 | POST | `/api/auth/invites/accept` | Accept an invite (new password, or existing account's password) |
+| POST | `/api/auth/password/forgot` | Email a reset link (always `202`, never reveals whether the account exists) |
+| POST | `/api/auth/password/reset` | `token` + new `password` (single use, 1 hour; signs out every session) |
 | GET | `/api/public/organizations/{slug}` | Organization name/logo for the sign-in screen |
 
 Access tokens last 15 minutes and carry `sub` (user id), `org`, `role`, `name`.
@@ -222,3 +224,32 @@ Browsers upload and download directly to storage (`MEDIA_STORAGE=local` for deve
 | POST | `/api/instructor/lessons/{lessonId}/video/upload` | Mux direct-upload URL (requires `MUX_TOKEN_ID`/`MUX_TOKEN_SECRET`) |
 | DELETE | `/api/instructor/lessons/{lessonId}/video` | Remove the video |
 | POST | `/api/webhooks/mux` | Mux events (signature-verified): upload asset created, asset ready/errored |
+
+## Notifications (`backend-10-notification`)
+
+| Method | Path | Purpose |
+|---|---|---|
+| GET | `/api/me/notifications?unread=` | My notifications in this organization, newest first |
+| GET | `/api/me/notifications/unread-count` | Badge count |
+| POST | `/api/me/notifications/{id}/read` | Mark one read |
+| POST | `/api/me/notifications/read-all` | Mark all read |
+| GET / PUT | `/api/me/notification-settings` | `emailEnabled` for optional emails |
+
+What triggers them:
+
+| Event | Who | In-app | Email |
+|---|---|---|---|
+| Invite created | invitee | — | always |
+| Password reset requested | account owner | — | always |
+| Assigned to a course | learner | ✓ | optional |
+| Course completed | learner | ✓ | optional |
+| Assignment submitted | course instructor | ✓ | — |
+| Submission graded / returned | learner | ✓ | optional |
+| New thread in my course | course instructor | ✓ | — |
+| Reply to my thread | thread author | ✓ | optional |
+| Session scheduled / rescheduled / cancelled | enrolled learners | ✓ | optional |
+| Order paid / refunded | buyer | ✓ | always (receipt) |
+| Quiz/assignment due within 24 h | learners who haven't done it | ✓ | optional (once per due date) |
+
+`MAIL_MODE=log` prints emails to the console; `smtp` sends them through `MAIL_HOST`/`MAIL_PORT`.
+Notifications are delivered after the triggering request commits, on a background pool.
