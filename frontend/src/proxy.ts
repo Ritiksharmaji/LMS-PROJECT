@@ -8,6 +8,7 @@ const AREAS: { prefix: string; roles: string[] }[] = [
   { prefix: "/admin", roles: ["ADMIN"] },
   { prefix: "/teach", roles: ["INSTRUCTOR", "ADMIN"] },
   { prefix: "/learn", roles: ["STUDENT", "INSTRUCTOR", "ADMIN"] },
+  { prefix: "/checkout", roles: ["STUDENT", "INSTRUCTOR", "ADMIN"] },
 ];
 
 function home(role?: string) {
@@ -38,5 +39,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/teach/:path*", "/learn/:path*", "/login", "/signup"],
+  matcher: ["/admin/:path*", "/teach/:path*", "/learn/:path*", "/checkout/:path*", "/login", "/signup"],
 };

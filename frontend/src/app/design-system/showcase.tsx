@@ -4,7 +4,7 @@ import { useState, type ReactNode } from "react";
 
 import {
   Avatar, Badge, Button, Card, Checkbox, CourseCard, Dialog, Icon, IconButton, Input, LessonItem, PageHead, ProgressBar,
-  ProgressRing, Radio, Select, Sidebar, StatCard, Switch, Tabs, Tag, Textarea, Toast, ToastProvider, Tooltip, useToast,
+  ProgressRing, Radio, Select, Sidebar, StatCard, Switch, Tabs, Tag, Textarea, Toast, Tooltip, useToast,
 } from "@/components/ui";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
@@ -27,7 +27,7 @@ export function Showcase() {
   const [pill, setPill] = useState("Week");
   const [open, setOpen] = useState(false);
   return (
-    <ToastProvider>
+    <>
       <div className="flex min-h-screen">
         <Sidebar
           sections={[
@@ -139,6 +139,6 @@ export function Showcase() {
           </Dialog>
         </main>
       </div>
-    </ToastProvider>
+    </>
   );
 }

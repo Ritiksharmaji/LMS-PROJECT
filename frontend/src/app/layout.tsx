@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Figtree, JetBrains_Mono, Sora } from "next/font/google";
+import { Providers } from "@/components/providers";
+
 import "./globals.css";
 
 const sora = Sora({ variable: "--font-sora", subsets: ["latin", "latin-ext"], weight: ["400", "500", "600", "700"] });
@@ -16,7 +18,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${sora.variable} ${figtree.variable} ${jetbrains.variable}`}>
-      <body>{children}</body>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

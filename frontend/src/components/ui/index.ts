@@ -12,6 +12,7 @@ export { ICONS, type IconName } from "./icons";
 export { LessonItem, type LessonStatus } from "./LessonItem";
 export { EmptyState, ErrorState, PageHead, Skeleton, Spinner } from "./Page";
 export { ProgressBar, ProgressRing } from "./Progress";
+export { RelativeTime } from "./RelativeTime";
 export { Sidebar, type NavItem, type NavSection } from "./Sidebar";
 export { StatCard } from "./StatCard";
 export { Tabs, type TabItem } from "./Tabs";
