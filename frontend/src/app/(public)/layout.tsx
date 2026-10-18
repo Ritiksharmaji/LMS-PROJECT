@@ -5,7 +5,7 @@ export default function PublicLayout({ children }: LayoutProps<"/">) {
   return (
     <div style={{ minHeight: "100vh", background: "var(--bg-app)" }}>
       <PublicNav />
-      {children}
+      <div className="ob-page">{children}</div>
       <PublicFooter />
     </div>
   );

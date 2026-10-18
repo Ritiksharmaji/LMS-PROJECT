@@ -51,7 +51,7 @@ export function SignupForm({ org }: { org: OrgView | null }) {
   return (
     <AuthSplit image={AUTH_SCENES.student}>
       <AuthHeading title="Join for free" sub={<>Create your learner account at {org?.name ?? "Orbitly"}.</>} />
-      <form className="flex flex-col gap-4" onSubmit={submit}>
+      <form className="ob-enter-stagger flex flex-col gap-4" onSubmit={submit}>
         <FormError message={error} />
         <Input name="fullName" label="Full name" iconLeft="user" autoComplete="name" required error={f.fullName} />
         <Input name="email" label="Email" iconLeft="mail" type="email" autoComplete="email" required error={f.email} />
@@ -80,7 +80,7 @@ export function RegisterForm() {
   return (
     <AuthSplit image={AUTH_SCENES.admin}>
       <AuthHeading title="Create your organization" sub="Bring your courses, people and analytics into one place. You'll be its first admin." />
-      <form className="flex flex-col gap-4" onSubmit={submit}>
+      <form className="ob-enter-stagger flex flex-col gap-4" onSubmit={submit}>
         <FormError message={error} />
         <Input
           name="orgName"
@@ -126,7 +126,7 @@ export function AcceptInviteForm({ token, invite }: { token: string; invite: Inv
           <AuthHeading title={`Join ${invite.organization.name}`} sub={invite.existingAccount ? <>You already have an Orbitly account as {invite.email}. Confirm your password to join.</> : <>Set up your account for {invite.email}.</>} />
         </div>
       </div>
-      <form className="flex flex-col gap-4" onSubmit={submit}>
+      <form className="ob-enter-stagger flex flex-col gap-4" onSubmit={submit}>
         <FormError message={error} />
         {!invite.existingAccount && <Input name="fullName" label="Full name" iconLeft="user" autoComplete="name" required error={f.fullName} />}
         <Input name="password" label={invite.existingAccount ? "Your password" : "Choose a password"} iconLeft="lock" type="password" autoComplete={invite.existingAccount ? "current-password" : "new-password"} minLength={8} required error={f.password} />
@@ -167,7 +167,7 @@ export function ForgotPasswordForm() {
       ) : (
         <>
           <AuthHeading title="Forgot your password?" sub="Enter your email and we'll send you a link to choose a new one." />
-          <form className="flex flex-col gap-4" onSubmit={submit}>
+          <form className="ob-enter-stagger flex flex-col gap-4" onSubmit={submit}>
             <FormError message={error} />
             <Input name="email" label="Email" iconLeft="mail" type="email" autoComplete="email" required error={f.email} />
             <Button type="submit" size="lg" fullWidth iconRight="send" loading={busy}>
@@ -202,7 +202,7 @@ export function ResetPasswordForm({ token }: { token: string }) {
       ) : (
         <>
           <AuthHeading title="Choose a new password" />
-          <form className="flex flex-col gap-4" onSubmit={submit}>
+          <form className="ob-enter-stagger flex flex-col gap-4" onSubmit={submit}>
             <FormError message={error} />
             <Input name="password" label="New password" iconLeft="lock" type="password" autoComplete="new-password" minLength={8} required error={f.password} help="At least 8 characters" />
             <Input name="confirm" label="Repeat password" iconLeft="lock" type="password" autoComplete="new-password" minLength={8} required />

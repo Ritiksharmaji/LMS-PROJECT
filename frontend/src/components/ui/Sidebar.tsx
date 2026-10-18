@@ -26,7 +26,7 @@ export function Sidebar({ sections, dark, footer, style, onNavigate }: { section
   return (
     <aside className={"ob-sidebar" + (dark ? " ob-sidebar--dark" : "")} style={style}>
       <Link href="/" className="ob-sidebar__brand no-underline hover:no-underline" style={{ color: dark ? "#fff" : "var(--ink-900)" }}>
-        orbitly<span style={{ color: "var(--coral-500)" }}>.</span>
+        orbitly<span className="ob-logo-dot" style={{ color: "var(--coral-500)" }}>.</span>
       </Link>
       <div style={{ display: "flex", flexDirection: "column", gap: 20, flex: 1, minHeight: 0, overflow: "auto" }}>
         {sections.map((s, i) => (

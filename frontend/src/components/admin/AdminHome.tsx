@@ -82,12 +82,12 @@ export function AdminHome() {
             <Skeleton height={240} />
           ) : (
             <div className="flex items-end gap-[22px] overflow-x-auto" style={{ height: 240 }}>
-              {d.series.map((p) => (
+              {d.series.map((p, i) => (
                 <div key={p.start} className="flex h-full min-w-[36px] flex-1 flex-col items-center justify-end gap-2">
                   <Tooltip content={`${p.enrollments} enrolled · ${p.completions} completed`}>
                     <div className="flex items-end gap-[5px]">
-                      <div style={{ width: 18, height: Math.max(3, (p.enrollments / max) * 190), borderRadius: 6, background: "var(--ink-900)", transition: "height 360ms var(--ease-out)" }} />
-                      <div style={{ width: 18, height: Math.max(3, (p.completions / max) * 190), borderRadius: 6, background: "var(--coral-500)", transition: "height 360ms var(--ease-out)" }} />
+                      <div className="ob-bar" style={{ animationDelay: `${i * 70}ms`, width: 18, height: Math.max(3, (p.enrollments / max) * 190), borderRadius: 6, background: "var(--ink-900)", transition: "height 360ms var(--ease-out)" }} />
+                      <div className="ob-bar" style={{ animationDelay: `${i * 70 + 120}ms`, width: 18, height: Math.max(3, (p.completions / max) * 190), borderRadius: 6, background: "var(--coral-500)", transition: "height 360ms var(--ease-out)" }} />
                     </div>
                   </Tooltip>
                   <span style={{ fontSize: 12, color: "var(--text-muted)", whiteSpace: "nowrap" }}>{p.label}</span>

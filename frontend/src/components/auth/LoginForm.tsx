@@ -89,7 +89,7 @@ export function LoginForm({ org, ssoUrl }: { org: OrgView | null; ssoUrl?: strin
           );
         })}
       </div>
-      <form className="flex flex-col gap-4" onSubmit={submit}>
+      <form className="ob-enter-stagger flex flex-col gap-4" onSubmit={submit}>
         <FormError message={error} />
         <Input label="Email" iconLeft="mail" type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
         <Input label="Password" iconLeft="lock" type="password" autoComplete="current-password" required value={password} onChange={(e) => setPassword(e.target.value)} />
