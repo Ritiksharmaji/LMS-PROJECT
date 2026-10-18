@@ -117,7 +117,7 @@ class BillingApiTest {
 		String payload = "{\"type\":\"checkout.session.completed\",\"data\":{\"object\":{\"id\":\"" + sessionId
 				+ "\",\"payment_status\":\"paid\",\"payment_intent\":\"pi_123\"}}}";
 		long t = Instant.now().getEpochSecond();
-		String good = "t=" + t + ",v1=" + StripeSignature.sign(t + "." + payload, "whsec_test_secret");
+		String good = "t=" + t + ",v1=" + com.orbitly.common.security.WebhookSignatures.sign(t + "." + payload, "whsec_test_secret");
 
 		mvc.perform(post("/api/webhooks/stripe").contentType(MediaType.APPLICATION_JSON)
 			.content(payload)
@@ -149,7 +149,7 @@ class BillingApiTest {
 	void signatureCheckRejectsOldTimestamps() {
 		String payload = "{}";
 		long old = Instant.now().minus(10, ChronoUnit.MINUTES).getEpochSecond();
-		String header = "t=" + old + ",v1=" + StripeSignature.sign(old + "." + payload, "s");
-		org.assertj.core.api.Assertions.assertThat(StripeSignature.verify(payload, header, "s", Instant.now())).isFalse();
+		String header = "t=" + old + ",v1=" + com.orbitly.common.security.WebhookSignatures.sign(old + "." + payload, "s");
+		org.assertj.core.api.Assertions.assertThat(com.orbitly.common.security.WebhookSignatures.verify(payload, header, "s", Instant.now())).isFalse();
 	}
 }

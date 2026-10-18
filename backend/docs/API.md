@@ -120,7 +120,7 @@ Finishing every lesson sets the enrollment to COMPLETED and issues a certificate
 | GET | `/api/me/lessons/{lessonId}/quiz` | Questions (no answer key), my attempts, attempts left, passed |
 | POST | `/api/me/lessons/{lessonId}/quiz/attempts` | Submit `answers` (`{questionId: [optionIndex]}`); returns score, per-question result, explanations. Passing completes the lesson |
 | GET | `/api/me/lessons/{lessonId}/assignment` | Instructions, due date, my submission and grade |
-| POST | `/api/me/lessons/{lessonId}/assignment/submission` | Submit `body`, `linkUrl` and/or `fileKey`+`fileName`. One submission unless returned. Completes the lesson |
+| POST | `/api/me/lessons/{lessonId}/assignment/submission` | Submit `body`, `linkUrl` and/or an uploaded `fileId` (purpose SUBMISSION). One submission unless returned. Completes the lesson |
 | GET | `/api/me/deadlines` | Open quizzes/assignments with due dates, soonest first (incl. 14 days overdue) |
 | GET | `/api/me/grades` | My quiz results and assignment grades |
 
@@ -189,3 +189,36 @@ Instructors and admins enroll in any course for free with `POST /api/me/enrollme
 | Method | Path | Purpose |
 |---|---|---|
 | POST | `/api/webhooks/stripe` | Stripe events (signature-verified, idempotent): session completed / expired / failed |
+
+## Media (`backend-09-media`)
+
+Browsers upload and download directly to storage (`MEDIA_STORAGE=local` for development, `s3` for AWS S3 / Cloudflare R2).
+
+### Uploading a file
+1. `POST /api/me/uploads` with `purpose`, `fileName`, `contentType`, `sizeBytes` (and `courseId` for COURSE_COVER, RESOURCE, SUBMISSION) → `{fileId, uploadUrl, method, headers}`
+2. `PUT` the bytes to `uploadUrl` with `headers`
+3. `POST /api/me/uploads/{fileId}/complete` → file with `publicUrl` for public images
+
+| Purpose | Who uploads | Who reads | Limit |
+|---|---|---|---|
+| AVATAR | anyone | public URL | 5 MB images |
+| ORG_LOGO | admins | public URL | 5 MB images |
+| COURSE_COVER | course staff | public URL | 5 MB images |
+| RESOURCE | course staff | anyone with course access | 100 MB |
+| SUBMISSION | enrolled learners | owner + course staff | 50 MB documents |
+
+| Method | Path | Purpose |
+|---|---|---|
+| GET | `/api/me/files/{fileId}/download` | Short-lived download link (10 min) |
+| GET | `/api/me/courses/{courseId}/resources?lessonId=` | Course/lesson resources (files and links) |
+| POST | `/api/instructor/courses/{courseId}/resources` | Add a resource: `title` + `fileId` or `url`, optional `lessonId` |
+| DELETE | `/api/instructor/resources/{id}` | Remove a resource |
+
+### Lesson video
+| Method | Path | Purpose |
+|---|---|---|
+| GET | `/api/me/lessons/{lessonId}/video` | `streamUrl` (Mux HLS with signed token, or plain URL), thumbnail, duration. Preview lessons are open to everyone in the org |
+| PUT | `/api/instructor/lessons/{lessonId}/video` | Use a plain video `url` |
+| POST | `/api/instructor/lessons/{lessonId}/video/upload` | Mux direct-upload URL (requires `MUX_TOKEN_ID`/`MUX_TOKEN_SECRET`) |
+| DELETE | `/api/instructor/lessons/{lessonId}/video` | Remove the video |
+| POST | `/api/webhooks/mux` | Mux events (signature-verified): upload asset created, asset ready/errored |

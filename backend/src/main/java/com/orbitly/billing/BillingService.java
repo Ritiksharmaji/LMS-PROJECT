@@ -183,7 +183,7 @@ class BillingService {
 
 	@Transactional
 	void handleStripeWebhook(String payload, String signature) {
-		if (!StripeSignature.verify(payload, signature, billing.stripe().webhookSecret(), clock.instant())) {
+		if (!com.orbitly.common.security.WebhookSignatures.verify(payload, signature, billing.stripe().webhookSecret(), clock.instant())) {
 			throw ApiException.badRequest("Invalid signature");
 		}
 		JsonNode event = json.readTree(payload);
