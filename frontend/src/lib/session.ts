@@ -13,6 +13,8 @@ import type { AuthResponse, Role } from "./types";
 export const ACCESS_COOKIE = "orb_at";
 export const REFRESH_COOKIE = "orb_rt";
 export const ROLE_COOKIE = "orb_role";
+/** The signed-in organization's slug (not sensitive), so server pages can show that org's catalog. */
+export const ORG_COOKIE = "orb_org";
 /** "0" when the person unticked "Keep me signed in"; refreshes keep the same behaviour. */
 export const REMEMBER_COOKIE = "orb_remember";
 
@@ -36,6 +38,7 @@ export function setSession(res: NextResponse, auth: AuthResponse, remember = tru
     maxAge: remember ? THIRTY_DAYS : undefined,
   });
   res.cookies.set(ROLE_COOKIE, auth.role, { secure, sameSite: "lax", path: "/", maxAge: remember ? THIRTY_DAYS : undefined });
+  res.cookies.set(ORG_COOKIE, auth.organization.slug, { secure, sameSite: "lax", path: "/", maxAge: remember ? THIRTY_DAYS : undefined });
   res.cookies.set(REMEMBER_COOKIE, remember ? "1" : "0", { httpOnly: true, secure, sameSite: "lax", path: "/api", maxAge: remember ? THIRTY_DAYS : undefined });
 }
 
@@ -44,6 +47,7 @@ export function clearSession(res: NextResponse) {
   res.cookies.set(REFRESH_COOKIE, "", { path: "/api", maxAge: 0 });
   res.cookies.set(ROLE_COOKIE, "", { path: "/", maxAge: 0 });
   res.cookies.set(REMEMBER_COOKIE, "", { path: "/api", maxAge: 0 });
+  res.cookies.set(ORG_COOKIE, "", { path: "/", maxAge: 0 });
 }
 
 /** Exchanges a refresh token for a new pair. Returns null when the session is over. */

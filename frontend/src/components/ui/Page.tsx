@@ -7,9 +7,9 @@ export function PageHead({ overline, title, sub, actions }: { overline?: ReactNo
   return (
     <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
       <div className="min-w-0">
-        {overline && <div className="ob-overline" style={{ marginBottom: 6 }}>{overline}</div>}
-        <h1 style={{ font: "600 30px/38px var(--font-display)", letterSpacing: "-0.03em" }}>{title}</h1>
-        {sub && <p style={{ margin: "6px 0 0", color: "var(--text-muted)", fontSize: 15 }}>{sub}</p>}
+        {overline && <div className="ob-overline" style={{ marginBottom: 6, color: "var(--text-muted)" }}>{overline}</div>}
+        <h1 style={{ font: "600 28px/36px var(--font-display)", letterSpacing: "-0.02em" }}>{title}</h1>
+        {sub && <div style={{ marginTop: 4, color: "var(--text-muted)", fontSize: 14 }}>{sub}</div>}
       </div>
       {actions && <div className="flex flex-wrap items-center gap-2.5">{actions}</div>}
     </div>
