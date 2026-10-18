@@ -42,3 +42,41 @@ Refresh tokens last 30 days.
 | GET / PATCH | `/api/admin/organization` | Name, logo, `seatLimit`, `selfSignup`; shows `seatsUsed` |
 
 Rules: an organization always keeps at least one active admin; seat limits cap active members plus pending invites.
+
+## Catalog (`backend-03-catalog`)
+
+### Public catalog (no login)
+| Method | Path | Purpose |
+|---|---|---|
+| GET | `/api/public/organizations/{org}/categories` | Categories with published course counts |
+| GET | `/api/public/organizations/{org}/courses` | Search: `category` (slug), `level`, `price=free\|paid`, `q`, `sort=POPULAR\|RATING\|NEWEST\|PRICE_ASC\|PRICE_DESC`, `page`, `size` |
+| GET | `/api/public/organizations/{org}/courses/{slug}` | Course page: card, description, outcomes, instructor, curriculum outline (no lesson content) |
+
+### Wishlist (signed in)
+| Method | Path | Purpose |
+|---|---|---|
+| GET | `/api/me/wishlist` | Saved courses |
+| PUT / DELETE | `/api/me/wishlist/{courseId}` | Save / unsave (idempotent) |
+
+### Course authoring (INSTRUCTOR for own courses, ADMIN for any)
+| Method | Path | Purpose |
+|---|---|---|
+| GET | `/api/instructor/courses` | Courses I teach (admins: every course) |
+| POST | `/api/instructor/courses` | Create a draft |
+| GET / PATCH | `/api/instructor/courses/{id}` | Editor view (with lesson content) / update. Admin-only fields: `instructorId`, `featured` |
+| POST | `/api/instructor/courses/{id}/publish` | Publish (needs at least one lesson) |
+| POST | `/api/instructor/courses/{id}/archive` | Hide from the catalog |
+| DELETE | `/api/instructor/courses/{id}` | Delete an unpublished draft with no learners |
+| PUT | `/api/instructor/courses/{id}/order` | Reorder all sections and lessons |
+| POST | `/api/instructor/courses/{id}/sections` | Add a section |
+| PATCH / DELETE | `/api/instructor/sections/{id}` | Rename / delete a section (and its lessons) |
+| POST | `/api/instructor/sections/{id}/lessons` | Add a lesson: `kind` VIDEO, READING, QUIZ or ASSIGNMENT |
+| PATCH / DELETE | `/api/instructor/lessons/{id}` | Update (incl. move to another `sectionId`) / delete |
+
+### Categories (ADMIN)
+| Method | Path | Purpose |
+|---|---|---|
+| POST | `/api/admin/categories` | Create (`name`, `icon`, `hue`, `position`) |
+| PUT / DELETE | `/api/admin/categories/{id}` | Update / delete (courses become uncategorized) |
+
+Courses keep `durationMinutes`, `lessonCount`, `enrollmentCount`, `ratingAvg` and `ratingCount` up to date for cards.
