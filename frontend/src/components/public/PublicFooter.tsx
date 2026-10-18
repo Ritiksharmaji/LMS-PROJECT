@@ -16,7 +16,7 @@ export function PublicFooter() {
     ["Company", [["About", "/"], ["Careers", "/"], ["Privacy", "/"], ["Accessibility", "/"]]],
   ];
   return (
-    <footer style={{ background: "var(--ink-950)", color: "var(--ink-300)", padding: "48px 40px 32px", marginTop: 72 }}>
+    <footer style={{ background: "var(--night-950)", borderTop: "1px solid var(--night-edge)", color: "var(--night-300)", padding: "48px 40px 32px", marginTop: 72 }}>
       <div className="mx-auto grid max-w-[1240px] gap-8 md:grid-cols-[1.4fr_repeat(3,1fr)]">
         <div>
           <Mark dark />
@@ -26,7 +26,7 @@ export function PublicFooter() {
           <div key={h}>
             <div style={{ color: "#fff", font: "600 14px var(--font-display)", marginBottom: 12 }}>{h}</div>
             {links.map(([label, href]) => (
-              <Link key={label} href={href} className="block no-underline hover:text-white hover:no-underline" style={{ padding: "4px 0", color: "var(--ink-300)" }}>
+              <Link key={label} href={href} className="block no-underline hover:text-white hover:no-underline" style={{ padding: "4px 0", color: "var(--night-300)" }}>
                 {label}
               </Link>
             ))}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Figtree, JetBrains_Mono, Sora } from "next/font/google";
 import { Providers } from "@/components/providers";
+import { THEME_SCRIPT } from "@/components/theme/ThemeSwitch";
 
 import "./globals.css";
 import "./orbitly.css";
@@ -18,7 +19,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${sora.variable} ${figtree.variable} ${jetbrains.variable}`}>
+    <html lang="en" className={`${sora.variable} ${figtree.variable} ${jetbrains.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       <body>
         <Providers>{children}</Providers>
       </body>

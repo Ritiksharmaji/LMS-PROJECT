@@ -31,7 +31,7 @@ export function WishButton({ courseId }: { courseId: string }) {
       variant="secondary"
       size="sm"
       onClick={() => toggle.mutate()}
-      style={saved ? { color: "var(--coral-600)", background: "#fff" } : { background: "#fff" }}
+      style={saved ? { color: "var(--coral-600)", background: "var(--surface-card)" } : { background: "var(--surface-card)" }}
       aria-pressed={saved}
     />
   );

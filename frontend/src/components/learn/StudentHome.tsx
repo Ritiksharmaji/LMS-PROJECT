@@ -44,16 +44,16 @@ function ContinueHero({ summary }: { summary: LearningSummary }) {
   const next = lessons.find((l) => l.id === player.data?.resumeLessonId);
   const pct = current.progress.percent;
   return (
-    <div className="relative flex items-center gap-7 overflow-hidden" style={{ borderRadius: 20, background: "var(--ink-900)", color: "#fff", padding: 28 }}>
+    <div className="relative flex items-center gap-7 overflow-hidden" style={{ borderRadius: 20, background: "var(--night-panel)", border: "1px solid var(--night-edge)", color: "#fff", padding: 28 }}>
       {c.coverUrl && (
         // eslint-disable-next-line @next/next/no-img-element
         <img src={c.coverUrl} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.28 }} />
       )}
-      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, var(--ink-900) 35%, rgba(22,26,51,.6))" }} />
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, var(--night-panel) 35%, color-mix(in srgb, var(--night-panel) 60%, transparent))" }} />
       <div className="relative min-w-0 flex-1">
         <Badge tone="accent">Continue learning</Badge>
         <div style={{ font: "600 24px/32px var(--font-display)", letterSpacing: "-0.02em", marginTop: 14 }}>{next?.title ?? c.title}</div>
-        <div style={{ color: "var(--ink-300)", marginTop: 4 }}>
+        <div style={{ color: "var(--night-300)", marginTop: 4 }}>
           {c.title}
           {next && ` · ${next.section} · ${next.kind === "QUIZ" ? "Quiz" : next.kind === "ASSIGNMENT" ? "Assignment" : `${next.durationMinutes} min`}`}
         </div>

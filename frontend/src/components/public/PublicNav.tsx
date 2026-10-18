@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Suspense, useState } from "react";
 
+import { ThemeSwitch } from "@/components/theme/ThemeSwitch";
 import { Button, Input } from "@/components/ui";
 import { useSessionRole } from "@/lib/use-session";
 
@@ -50,7 +51,7 @@ export function PublicNav() {
   return (
     <header
       className="sticky top-0 z-10 flex h-[72px] items-center gap-7 px-4 md:px-10"
-      style={{ background: "rgba(251,250,247,.88)", backdropFilter: "blur(14px)", borderBottom: "1px solid var(--border-subtle)" }}
+      style={{ background: "var(--bg-glass)", backdropFilter: "blur(14px)", borderBottom: "1px solid var(--border-subtle)" }}
     >
       <Mark />
       <Suspense fallback={<NavLinks active={false} />}>
@@ -67,6 +68,7 @@ export function PublicNav() {
         <Input iconLeft="search" size="sm" placeholder="What do you want to learn?" value={q} onChange={(e) => setQ(e.target.value)} aria-label="Search courses" />
       </form>
       <div className="flex-1" />
+      <ThemeSwitch className="ob-hide-sm" />
       {role ? (
         <Button href={home(role)} iconRight="arrow-right">
           Go to dashboard

@@ -29,7 +29,7 @@ export function Button(props: AsButton | AsLink) {
     <>
       {loading ? <Icon name="loader-circle" size={is} className="ob-spin" /> : iconLeft && <Icon name={iconLeft} size={is} />}
       {children}
-      {iconRight && <Icon name={iconRight} size={is} className="ob-btn__end" />}
+      {iconRight && <Icon name={iconRight} size={is} />}
     </>
   );
   if ("href" in rest && rest.href !== undefined) {

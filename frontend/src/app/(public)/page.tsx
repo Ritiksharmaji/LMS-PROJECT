@@ -106,7 +106,7 @@ export default async function Landing() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img className="ob-hero-img" src={IMG(SCENES.hero, 1100, 1000)} alt="Students learning together" style={{ position: "absolute", inset: "20px 20px 40px 40px", width: "calc(100% - 60px)", height: "calc(100% - 60px)", objectFit: "cover", borderRadius: 28, boxShadow: "var(--shadow-lg)" }} />
           <div className="ob-float-in" style={{ position: "absolute", left: 0, top: 60, ...vars({ "--d": 700 }) }}>
-            <div className="ob-float" style={{ padding: "12px 14px", borderRadius: 14, background: "#fff", boxShadow: "var(--shadow-lg)", display: "flex", alignItems: "center", gap: 10, ...vars({ "--t": "6s" }) }}>
+            <div className="ob-float" style={{ padding: "12px 14px", borderRadius: 14, background: "var(--surface-card)", boxShadow: "var(--shadow-lg)", display: "flex", alignItems: "center", gap: 10, ...vars({ "--t": "6s" }) }}>
               <span style={{ width: 34, height: 34, borderRadius: 10, display: "grid", placeItems: "center", background: "var(--orbit-100)", color: "var(--orbit-700)" }}>
                 <Icon name="users" size={18} />
               </span>
@@ -117,7 +117,7 @@ export default async function Landing() {
             </div>
           </div>
           <div className="ob-float-in" style={{ position: "absolute", right: 0, bottom: 0, width: 270, ...vars({ "--d": 900 }) }}>
-            <div className="ob-float" style={{ padding: 14, borderRadius: 16, background: "#fff", boxShadow: "var(--shadow-lg)", display: "flex", gap: 12, alignItems: "center", ...vars({ "--t": "7s", "--delay": "-3s" }) }}>
+            <div className="ob-float" style={{ padding: 14, borderRadius: 16, background: "var(--surface-card)", boxShadow: "var(--shadow-lg)", display: "flex", gap: 12, alignItems: "center", ...vars({ "--t": "7s", "--delay": "-3s" }) }}>
               <span style={{ width: 40, height: 40, flex: "none", borderRadius: 12, display: "grid", placeItems: "center", background: "var(--green-100)", color: "var(--green-700)" }}>
                 <Icon name="award" />
               </span>
@@ -198,7 +198,7 @@ export default async function Landing() {
                 [String(popular.total), "courses to choose from"],
                 [avgRating ? `${avgRating.toFixed(1)}/5` : "—", "average course rating"],
               ].map(([n, l]) => (
-                <div key={l} style={{ background: "#fff", borderRadius: 16, padding: 18 }}>
+                <div key={l} style={{ background: "var(--surface-card)", borderRadius: 16, padding: 18 }}>
                   <div style={{ font: "600 28px var(--font-display)", color: "var(--text-strong)", letterSpacing: "-0.02em" }}>
                     {n.endsWith("/5") ? <><CountUp value={n.slice(0, -2)} />/5</> : <CountUp value={n} />}
                   </div>
