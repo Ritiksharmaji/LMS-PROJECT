@@ -111,3 +111,26 @@ Finishing every lesson sets the enrollment to COMPLETED and issues a certificate
 | GET | `/api/instructor/courses/{courseId}/learners` | Roster with progress and last activity |
 | POST | `/api/instructor/courses/{courseId}/learners` | Enroll members directly (`userIds`), free of charge |
 | DELETE | `/api/instructor/enrollments/{id}` | Remove a learner |
+
+## Assessment (`backend-05-assessment`)
+
+### Learners
+| Method | Path | Purpose |
+|---|---|---|
+| GET | `/api/me/lessons/{lessonId}/quiz` | Questions (no answer key), my attempts, attempts left, passed |
+| POST | `/api/me/lessons/{lessonId}/quiz/attempts` | Submit `answers` (`{questionId: [optionIndex]}`); returns score, per-question result, explanations. Passing completes the lesson |
+| GET | `/api/me/lessons/{lessonId}/assignment` | Instructions, due date, my submission and grade |
+| POST | `/api/me/lessons/{lessonId}/assignment/submission` | Submit `body`, `linkUrl` and/or `fileKey`+`fileName`. One submission unless returned. Completes the lesson |
+| GET | `/api/me/deadlines` | Open quizzes/assignments with due dates, soonest first (incl. 14 days overdue) |
+| GET | `/api/me/grades` | My quiz results and assignment grades |
+
+### Course staff
+| Method | Path | Purpose |
+|---|---|---|
+| GET / PUT | `/api/instructor/lessons/{lessonId}/quiz` | Quiz editor: `passPercent` (default 70), `maxAttempts`, `dueAt`, `questions` (SINGLE/MULTIPLE) |
+| GET / PUT | `/api/instructor/lessons/{lessonId}/assignment` | `instructions`, `dueAt`, `maxPoints`, `allowLate` |
+| GET | `/api/instructor/grading-queue?courseId=` | Ungraded submissions, oldest first |
+| GET | `/api/instructor/submissions/{id}` | One submission |
+| PUT | `/api/instructor/submissions/{id}/grade` | `points` + `feedback` |
+| POST | `/api/instructor/submissions/{id}/return` | Send back for revision with `feedback` |
+| GET | `/api/instructor/courses/{courseId}/gradebook` | Columns (quizzes/assignments in curriculum order) × learners, averages |

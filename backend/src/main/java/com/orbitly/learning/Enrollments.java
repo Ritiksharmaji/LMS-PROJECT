@@ -67,6 +67,12 @@ public class Enrollments {
 		return e.getId();
 	}
 
+	/** Course ids the user is enrolled in within the organization. */
+	@Transactional(readOnly = true)
+	public List<UUID> courseIds(UUID orgId, UUID userId) {
+		return enrollments.findForUser(orgId, userId, null).stream().map(Enrollment::getCourseId).toList();
+	}
+
 	@Transactional(readOnly = true)
 	public List<UUID> learnerIds(UUID courseId) {
 		return enrollments.learnerIds(courseId);
