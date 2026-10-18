@@ -61,6 +61,7 @@ For production set, at minimum: `JWT_SECRET`, `APP_URL`, `MAIL_MODE=smtp` + SMTP
 | `main` | The complete app (everything below, merged) |
 | `development` | Integration branch: backend + frontend |
 | `backend` ← `backend-01-setup` … `backend-11-analytics` | API, one branch per module |
-| `frontend` ← `frontend-01-setup` … `frontend-09-motion` | Web app, one branch per module |
+| `frontend` ← `frontend-01-setup` … `frontend-10-motion-all` | Web app, one branch per module |
 | `frontend-08-complete` | Error pages, Docker, smoke test, this README |
 | `frontend-09-motion` | Landing hero animation, scroll reveals and hover polish |
+| `frontend-10-motion-all` | Motion on every page; fixes a hydration warning from the scroll reveals |

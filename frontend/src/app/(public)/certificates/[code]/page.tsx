@@ -28,9 +28,11 @@ async function Certificate({ params }: { params: Promise<{ code: string }> }) {
   if (!cert) notFound();
   return (
     <div className="ob-card relative overflow-hidden" style={{ padding: "56px 48px", textAlign: "center" }}>
-      <div style={{ position: "absolute", width: 360, height: 360, borderRadius: "50%", border: "1.5px solid var(--orbit-200)", top: -180, right: -120 }} />
-      <div style={{ position: "absolute", width: 140, height: 140, borderRadius: "50%", background: "var(--coral-100)", bottom: -60, left: -40 }} />
-      <div className="relative">
+      <div className="ob-orbit ob-orbit--spin" style={{ width: 360, height: 360, border: "1.5px solid var(--orbit-200)", top: -180, right: -120, ["--t" as string]: "40s" }}>
+        <span className="ob-sat" style={{ left: "14.6%", top: "85.4%", ["--c" as string]: "var(--orbit-500)" }} />
+      </div>
+      <div className="ob-orbit ob-orbit--drift" style={{ width: 140, height: 140, background: "var(--coral-100)", bottom: -60, left: -40, ["--t" as string]: "12s" }} />
+      <div className="ob-enter-stagger relative">
         <Badge tone="success" dot>
           Verified certificate
         </Badge>
@@ -54,7 +56,7 @@ async function Certificate({ params }: { params: Promise<{ code: string }> }) {
         </div>
         <div className="mt-10 flex items-center justify-center gap-2" style={{ color: "var(--text-muted)", fontSize: 13 }}>
           <Icon name="award" size={18} color="var(--coral-500)" />
-          orbitly<span style={{ color: "var(--coral-500)", marginLeft: -6 }}>.</span>
+          orbitly<span className="ob-logo-dot" style={{ color: "var(--coral-500)", marginLeft: -6 }}>.</span>
         </div>
       </div>
     </div>

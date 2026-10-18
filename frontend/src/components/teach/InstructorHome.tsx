@@ -43,7 +43,7 @@ function ActivityChart({ courses }: { courses: InstructorOverview["courses"] }) 
           {data.data.map((p, i) => (
             <div key={p.start} className="flex h-full flex-1 flex-col items-center justify-end gap-2">
               <Tooltip content={`${p.activeLearners} active ${p.activeLearners === 1 ? "learner" : "learners"}`}>
-                <div style={{ width: 32, height: Math.max(4, (p.activeLearners / max) * 140), borderRadius: 10, background: i === data.data.length - 1 ? "var(--orbit-500)" : "var(--orbit-200)", transition: "height 360ms var(--ease-out)" }} />
+                <div className="ob-bar" style={{ animationDelay: `${i * 70}ms`, width: 32, height: Math.max(4, (p.activeLearners / max) * 140), borderRadius: 10, background: i === data.data.length - 1 ? "var(--orbit-500)" : "var(--orbit-200)", transition: "height 360ms var(--ease-out)" }} />
               </Tooltip>
               <span style={{ font: "500 12px var(--font-body)", color: "var(--text-muted)" }}>{p.label}</span>
             </div>

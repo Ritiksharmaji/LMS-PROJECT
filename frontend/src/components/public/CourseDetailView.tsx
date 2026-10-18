@@ -34,7 +34,7 @@ export async function CourseDetailView({ slug, orgSlug, basePath = "/courses" }:
   };
 
   const curriculumPane = (
-    <div className="flex flex-col gap-3.5">
+    <div className="ob-stagger flex flex-col gap-3.5">
       {curriculum.map((s, si) => (
         <Card key={s.id} padding="8px">
           <div className="flex justify-between" style={{ padding: "10px 12px 6px" }}>
@@ -56,7 +56,7 @@ export async function CourseDetailView({ slug, orgSlug, basePath = "/courses" }:
       {outcomes.length > 0 && (
         <>
           <h3 style={{ font: "600 18px var(--font-display)", marginBottom: 14 }}>What you’ll learn</h3>
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="ob-stagger grid gap-3 sm:grid-cols-2">
             {outcomes.map((t) => (
               <div key={t} className="flex gap-2.5">
                 <Icon name="check" size={18} color="var(--success)" />
@@ -108,7 +108,7 @@ export async function CourseDetailView({ slug, orgSlug, basePath = "/courses" }:
           );
         })}
       </div>
-      <div className="flex flex-col gap-[18px]">
+      <div className="ob-stagger flex flex-col gap-[18px]">
         {reviews.list.length === 0 && <p style={{ color: "var(--text-muted)" }}>No reviews yet. Enrolled learners can leave one from the course player.</p>}
         {reviews.list.map((r) => (
           <div key={r.id} className="flex gap-3">
@@ -132,8 +132,10 @@ export async function CourseDetailView({ slug, orgSlug, basePath = "/courses" }:
     <div>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
       <div className="relative grid gap-9 overflow-hidden lg:grid-cols-[minmax(0,1fr)_340px]" style={{ borderRadius: 24, background: "var(--ink-950)", color: "#fff", padding: "32px 36px" }}>
-        <div style={{ position: "absolute", width: 420, height: 420, borderRadius: "50%", border: "1px solid rgba(255,255,255,.07)", right: 200, top: -200 }} />
-        <div className="relative">
+        <div className="ob-orbit ob-orbit--spin" style={{ width: 420, height: 420, border: "1px dashed rgba(255,255,255,.12)", right: 200, top: -200, ["--t" as string]: "60s" }}>
+          <span className="ob-sat" style={{ left: "50%", top: "100%", boxShadow: "none", ["--c" as string]: "var(--coral-500)", ["--s" as string]: "9px" }} />
+        </div>
+        <div className="ob-enter-stagger relative">
           <div className="flex items-center gap-1.5" style={{ fontSize: 13, color: "var(--ink-300)" }}>
             {category ? (
               <Link href={`${basePath}?category=${category.slug}`} style={{ color: "var(--ink-300)" }}>
@@ -176,11 +178,11 @@ export async function CourseDetailView({ slug, orgSlug, basePath = "/courses" }:
             </div>
           )}
         </div>
-        <div className="relative self-start overflow-hidden" style={{ background: "#fff", borderRadius: 18, color: "var(--text-body)", boxShadow: "var(--shadow-lg)" }}>
+        <div className="ob-float-in relative self-start overflow-hidden" style={{ ["--d" as string]: 250, background: "#fff", borderRadius: 18, color: "var(--text-body)", boxShadow: "var(--shadow-lg)" }}>
           <div style={{ position: "relative", aspectRatio: "16/9", background: `var(--${c.hue}-100)`, color: `var(--${c.hue}-500)`, display: "grid", placeItems: "center" }}>
             {c.coverUrl ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={c.coverUrl} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+              <img src={c.coverUrl} alt="" className="ob-cover-in" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
             ) : (
               <Icon name={c.icon} size={44} />
             )}
@@ -198,7 +200,7 @@ export async function CourseDetailView({ slug, orgSlug, basePath = "/courses" }:
         <CourseTabs lessons={c.lessonCount} reviews={c.ratingCount} panes={{ curriculum: curriculumPane, overview: overviewPane, instructor: instructorPane, reviews: reviewsPane }} />
         {alsoTook.length > 0 && (
           <>
-            <h3 style={{ font: "600 18px var(--font-display)", margin: "36px 0 14px" }}>Learners also took</h3>
+            <h3 className="ob-reveal" style={{ font: "600 18px var(--font-display)", margin: "36px 0 14px" }}>Learners also took</h3>
             <CourseGrid courses={alsoTook} basePath={basePath} />
           </>
         )}

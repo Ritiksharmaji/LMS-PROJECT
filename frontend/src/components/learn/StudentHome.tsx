@@ -159,7 +159,7 @@ export function StudentHome() {
           ) : active.length === 0 ? (
             <EmptyState title="Nothing in progress" message="Enroll in a course to see it here." action={<Button href="/learn/browse">Browse courses</Button>} />
           ) : (
-            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            <div className="ob-stagger grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
               {active.slice(0, 3).map((e) => (
                 <CourseCard key={e.id} {...cardProps(e.course)} price={null} progress={e.progress.percent} href={playerHref(e.course.id, e.lastLessonId)} />
               ))}
