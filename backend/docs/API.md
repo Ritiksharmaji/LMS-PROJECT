@@ -134,3 +134,15 @@ Finishing every lesson sets the enrollment to COMPLETED and issues a certificate
 | PUT | `/api/instructor/submissions/{id}/grade` | `points` + `feedback` |
 | POST | `/api/instructor/submissions/{id}/return` | Send back for revision with `feedback` |
 | GET | `/api/instructor/courses/{courseId}/gradebook` | Columns (quizzes/assignments in curriculum order) × learners, averages |
+
+## Schedule (`backend-06-schedule`)
+
+| Method | Path | Purpose |
+|---|---|---|
+| GET | `/api/me/schedule?from=&to=` | My calendar: sessions of courses I'm enrolled in or teach (default: next 7 days, max 92) |
+| GET | `/api/me/courses/{courseId}/sessions` | Upcoming sessions of one course |
+| GET | `/api/instructor/sessions?from=&to=` | Sessions of courses I manage (admins: all) |
+| POST | `/api/instructor/courses/{courseId}/sessions` | Schedule: `title`, `kind` (LIVE_CLASS, OFFICE_HOURS, STUDY_GROUP, WORKSHOP), `startsAt`, `endsAt`, `meetingUrl`, `location` |
+| PATCH | `/api/instructor/sessions/{id}` | Edit or reschedule |
+| POST | `/api/instructor/sessions/{id}/cancel` | Cancel (stays visible as cancelled) |
+| DELETE | `/api/instructor/sessions/{id}` | Delete |
