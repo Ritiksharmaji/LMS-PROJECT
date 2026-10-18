@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+/*
+ * Tailwind utilities for page layout. The Orbitly design system (tokens, base styles and ob-* components) lives in
+ * orbitly.css as native cascade layers, so utilities here can override component styles where needed.
+ */
+
+@theme inline {
+  --color-ink-950: var(--ink-950);
+  --color-ink-900: var(--ink-900);
+  --color-ink-800: var(--ink-800);
+  --color-ink-700: var(--ink-700);
+  --color-ink-600: var(--ink-600);
+  --color-ink-500: var(--ink-500);
+  --color-ink-400: var(--ink-400);
+  --color-ink-300: var(--ink-300);
+  --color-ink-200: var(--ink-200);
+  --color-ink-100: var(--ink-100);
+  --color-ink-50: var(--ink-50);
+  --color-paper-0: var(--paper-0);
+  --color-paper-50: var(--paper-50);
+  --color-paper-100: var(--paper-100);
+  --color-coral-700: var(--coral-700);
+  --color-coral-600: var(--coral-600);
+  --color-coral-500: var(--coral-500);
+  --color-coral-100: var(--coral-100);
+  --color-coral-50: var(--coral-50);
+  --color-orbit-700: var(--orbit-700);
+  --color-orbit-500: var(--orbit-500);
+  --color-orbit-200: var(--orbit-200);
+  --color-orbit-100: var(--orbit-100);
+  --color-strong: var(--text-strong);
+  --color-body: var(--text-body);
+  --color-muted: var(--text-muted);
+  --color-subtle: var(--text-subtle);
+  --color-card: var(--surface-card);
+  --color-sunken: var(--surface-sunken);
+  --color-line: var(--border-subtle);
+  --color-line-strong: var(--border-default);
+  /* utilities: font-heading / font-text / font-code */
+  --font-heading: var(--font-sora), "Sora", ui-sans-serif, system-ui, sans-serif;
+  --font-text: var(--font-figtree), "Figtree", ui-sans-serif, system-ui, sans-serif;
+  --font-code: var(--font-jetbrains), "JetBrains Mono", ui-monospace, monospace;
+}
