@@ -95,6 +95,32 @@ public class Api {
 		return session(body, admin.orgSlug(), email);
 	}
 
+	/** A course with ids of its lessons (in curriculum order). */
+	public record CourseFixture(UUID id, String slug, java.util.List<UUID> lessonIds) {
+	}
+
+	/**
+	 * Creates and publishes a course taught by {@code instructor} with one section holding a video, a reading, a quiz
+	 * and an assignment lesson.
+	 */
+	public CourseFixture publishedCourse(Session instructor, String title, int priceCents) throws Exception {
+		String course = body(post("/api/instructor/courses",
+				Map.of("title", title, "tagline", "Learn " + title, "priceCents", priceCents), instructor));
+		UUID courseId = UUID.fromString(JsonPath.read(course, "$.course.id"));
+		String section = body(post("/api/instructor/courses/" + courseId + "/sections", Map.of("title", "Foundations"),
+				instructor));
+		String sectionId = JsonPath.read(section, "$.id");
+		var lessons = new java.util.ArrayList<UUID>();
+		for (String[] l : new String[][] { { "What is a model?", "VIDEO" }, { "Your first dataset", "READING" },
+				{ "Check your understanding", "QUIZ" }, { "Problem set", "ASSIGNMENT" } }) {
+			String lesson = body(post("/api/instructor/sections/" + sectionId + "/lessons",
+					Map.of("title", l[0], "kind", l[1], "durationMinutes", 10, "content", "Body of " + l[0]), instructor));
+			lessons.add(UUID.fromString(JsonPath.read(lesson, "$.id")));
+		}
+		String published = body(post("/api/instructor/courses/" + courseId + "/publish", null, instructor));
+		return new CourseFixture(courseId, JsonPath.read(published, "$.course.slug"), lessons);
+	}
+
 	public static String body(ResultActions result) throws Exception {
 		return result.andReturn().getResponse().getContentAsString();
 	}
