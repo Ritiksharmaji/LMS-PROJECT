@@ -1,0 +1,24 @@
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
+*.iml
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Java / Gradle
+backend/build/
+backend/.gradle/
+backend/out/
+backend/bin/
+
+# Node / Next.js
+node_modules/
+frontend/.next/
+frontend/out/
+frontend/coverage/
+*.tsbuildinfo
+next-env.d.ts
