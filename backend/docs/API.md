@@ -253,3 +253,15 @@ What triggers them:
 
 `MAIL_MODE=log` prints emails to the console; `smtp` sends them through `MAIL_HOST`/`MAIL_PORT`.
 Notifications are delivered after the triggering request commits, on a background pool.
+
+## Analytics (`backend-11-analytics`)
+
+| Method | Path | Purpose |
+|---|---|---|
+| GET | `/api/admin/analytics/overview?range=DAYS_30\|MONTHS_6\|YEAR` | Active learners, courses live, completion rate (each with change vs the previous period), seat usage, enrollments vs completions series, recent activity (incl. seat alert ≥ 90%) |
+| GET | `/api/admin/analytics/report.csv` | Per-course report: learners, completed, completion %, rating, revenue |
+| GET | `/api/instructor/analytics/overview` | Enrolled learners (+ new in 90 days), average completion, to grade (+ oldest), rating, my courses with progress, at-risk learners (< 50% progress, idle 14 days) |
+| GET | `/api/instructor/courses/{courseId}/activity?range=WEEK\|TERM` | Distinct active learners per day (last 7 days) or per week (last 7 weeks) |
+
+Activity comes from an append-only `activity_events` log fed by domain events (lesson viewed/completed, quiz and
+assignment submissions, enrollments, discussion posts, purchases, members joining, courses published).

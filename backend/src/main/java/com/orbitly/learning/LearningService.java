@@ -54,15 +54,19 @@ class LearningService {
 
 	private final UserDirectory directory;
 
+	private final org.springframework.context.ApplicationEventPublisher events;
+
 	private final Clock clock;
 
 	LearningService(EnrollmentRepository enrollments, LessonProgressRepository progress, Enrollments enrollmentApi,
-			CourseCatalog catalog, UserDirectory directory, Clock clock) {
+			CourseCatalog catalog, UserDirectory directory, org.springframework.context.ApplicationEventPublisher events,
+			Clock clock) {
 		this.enrollments = enrollments;
 		this.progress = progress;
 		this.enrollmentApi = enrollmentApi;
 		this.catalog = catalog;
 		this.directory = directory;
+		this.events = events;
 		this.clock = clock;
 	}
 
@@ -152,6 +156,7 @@ class LearningService {
 			e.setLastLessonId(lessonId);
 			e.setLastAccessedAt(clock.instant());
 		});
+		events.publishEvent(new LearningEvents.LessonViewed(me.orgId(), me.userId(), ref.courseId(), lessonId));
 		return new LessonContent(lesson.id(), ref.courseId(), lesson.sectionId(), lesson.title(), lesson.kind(),
 				lesson.durationMinutes(), lesson.content(), p != null && p.getCompletedAt() != null,
 				p == null ? 0 : p.getPositionSeconds(), index > 0 ? ordered.get(index - 1).id() : null,
