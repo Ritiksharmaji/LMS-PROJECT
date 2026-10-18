@@ -13,11 +13,14 @@ import type { AuthResponse, Role } from "./types";
 export const ACCESS_COOKIE = "orb_at";
 export const REFRESH_COOKIE = "orb_rt";
 export const ROLE_COOKIE = "orb_role";
+/** "0" when the person unticked "Keep me signed in"; refreshes keep the same behaviour. */
+export const REMEMBER_COOKIE = "orb_remember";
 
 const secure = process.env.NODE_ENV === "production";
 const THIRTY_DAYS = 60 * 60 * 24 * 30;
 
-export function setSession(res: NextResponse, auth: AuthResponse) {
+/** `remember: false` makes the refresh and role cookies session cookies (gone when the browser closes). */
+export function setSession(res: NextResponse, auth: AuthResponse, remember = true) {
   res.cookies.set(ACCESS_COOKIE, auth.accessToken, {
     httpOnly: true,
     secure,
@@ -30,15 +33,17 @@ export function setSession(res: NextResponse, auth: AuthResponse) {
     secure,
     sameSite: "lax",
     path: "/api",
-    maxAge: THIRTY_DAYS,
+    maxAge: remember ? THIRTY_DAYS : undefined,
   });
-  res.cookies.set(ROLE_COOKIE, auth.role, { secure, sameSite: "lax", path: "/", maxAge: THIRTY_DAYS });
+  res.cookies.set(ROLE_COOKIE, auth.role, { secure, sameSite: "lax", path: "/", maxAge: remember ? THIRTY_DAYS : undefined });
+  res.cookies.set(REMEMBER_COOKIE, remember ? "1" : "0", { httpOnly: true, secure, sameSite: "lax", path: "/api", maxAge: remember ? THIRTY_DAYS : undefined });
 }
 
 export function clearSession(res: NextResponse) {
   res.cookies.set(ACCESS_COOKIE, "", { path: "/", maxAge: 0 });
   res.cookies.set(REFRESH_COOKIE, "", { path: "/api", maxAge: 0 });
   res.cookies.set(ROLE_COOKIE, "", { path: "/", maxAge: 0 });
+  res.cookies.set(REMEMBER_COOKIE, "", { path: "/api", maxAge: 0 });
 }
 
 /** Exchanges a refresh token for a new pair. Returns null when the session is over. */
