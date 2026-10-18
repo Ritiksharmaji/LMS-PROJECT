@@ -146,3 +146,19 @@ Finishing every lesson sets the enrollment to COMPLETED and issues a certificate
 | PATCH | `/api/instructor/sessions/{id}` | Edit or reschedule |
 | POST | `/api/instructor/sessions/{id}/cancel` | Cancel (stays visible as cancelled) |
 | DELETE | `/api/instructor/sessions/{id}` | Delete |
+
+## Discussion (`backend-07-discussion`)
+
+Anyone with access to the course (enrolled learners, its instructor, admins) can read and post.
+
+| Method | Path | Purpose |
+|---|---|---|
+| GET | `/api/me/courses/{courseId}/threads?lessonId=&unresolved=` | Threads, pinned first then most recent activity |
+| POST | `/api/me/courses/{courseId}/threads` | Ask/share: `body`, optional `title`, `lessonId` |
+| GET | `/api/me/threads/{id}` | Thread with replies (`author.staff` flags instructor/admin) |
+| PATCH / DELETE | `/api/me/threads/{id}` | Author edits; author or staff deletes |
+| PUT / DELETE | `/api/me/threads/{id}/pinned` | Staff pin / unpin |
+| PUT / DELETE | `/api/me/threads/{id}/resolved` | Author or staff resolve / reopen |
+| POST | `/api/me/threads/{id}/replies` | Reply |
+| PATCH / DELETE | `/api/me/replies/{id}` | Author edits; author or staff deletes |
+| PUT / DELETE | `/api/me/replies/{id}/answer` | Question author or staff mark the answer (resolves the thread) |
