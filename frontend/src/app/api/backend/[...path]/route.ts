@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 import { API_URL } from "@/lib/config";
-import { ACCESS_COOKIE, REFRESH_COOKIE, clearSession, refresh, setSession } from "@/lib/session";
+import { ACCESS_COOKIE, REFRESH_COOKIE, REMEMBER_COOKIE, clearSession, refresh, setSession } from "@/lib/session";
 import type { AuthResponse } from "@/lib/types";
 
 /**
@@ -52,7 +52,7 @@ async function forward(request: Request, ctx: RouteContext<"/api/backend/[...pat
     if (value) headers.set(name, value);
   }
   const res = new NextResponse(upstream.status === 204 ? null : upstream.body, { status: upstream.status, headers });
-  if (renewed) setSession(res, renewed);
+  if (renewed) setSession(res, renewed, store.get(REMEMBER_COOKIE)?.value !== "0");
   else if (upstream.status === 401) clearSession(res);
   return res;
 }

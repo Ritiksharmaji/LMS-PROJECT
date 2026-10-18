@@ -43,12 +43,14 @@ export async function POST(request: Request, ctx: RouteContext<"/api/session/[ac
     if (token) headers.Authorization = `Bearer ${token}`;
   }
 
+  const { remember = true, ...payload } = (await request.json().catch(() => ({}))) as Record<string, unknown> & { remember?: boolean };
+
   let upstream: Response;
   try {
     upstream = await fetch(`${API_URL}${target.path}`, {
       method: "POST",
       headers,
-      body: await request.text(),
+      body: JSON.stringify(payload),
       cache: "no-store",
     });
   } catch {
@@ -70,6 +72,6 @@ export async function POST(request: Request, ctx: RouteContext<"/api/session/[ac
     role: auth.role,
     home: homeFor(auth.role),
   });
-  setSession(res, auth);
+  setSession(res, auth, remember !== false);
   return res;
 }
